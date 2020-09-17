@@ -8,25 +8,34 @@
 
 """Test jsonschema validation."""
 
+import json
+
 from invenio_jsonschemas import current_jsonschemas
 from invenio_records.api import Record
 
 
-def test_metadata_extensions(appctx, minimal_record):
-    data = {
-        '$schema': (
-            current_jsonschemas.path_to_url('records/record-v1.0.0.json')
-        ),
-        'extensions': {
-            'dwc:family': 'Felidae',
-            'dwc:behavior': 'Plays with yarn, sleeps in cardboard box.',
-            'nubiomed:number_in_sequence': 3,
-            'nubiomed:scientific_sequence': [1, 1, 2, 3, 5, 8],
-            'nubiomed:original_presentation_date': '2019-02-14',
-            'nubiomed:right_or_wrong': True
-        }
-    }
-    minimal_record.update(data)
-    record = Record(minimal_record)
+def get_schema():
+    """This function loads the given schema available"""
 
-    record.validate()
+    try:
+        with open('../oarepo_rdm_records/jsonschemas/record-v1.0.0.json', 'r') as file:
+            schema = json.load(file)
+    except:
+        with open('./oarepo_rdm_records/jsonschemas/record-v1.0.0.json', 'r') as file:
+            schema = json.load(file)
+
+    return schema
+
+def test_json(app):
+    """Test of json schema with app."""
+    schema = app.extensions['invenio-records']
+
+    data = json.loads('{"titles" : {"cs": "jej", "en": "yay"}, "descriptions":{"cs-cz": "jej"}}')
+    schema.validate(data, get_schema())
+
+    data = json.loads('{"subjects":[{"subject": {"cs":"neco", "en-us":"neco jinyho"}}]}')
+    schema.validate(data, get_schema())
+
+    data = json.loads('{"locations":[{"description": {"cs":"neco", "en-us":"neco jinyho"}, "place": "string"}]}')
+    schema.validate(data, get_schema())
+
