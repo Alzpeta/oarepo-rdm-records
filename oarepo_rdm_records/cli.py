@@ -106,14 +106,10 @@ def create_fake_record():
                 }
             }]
         }],
-        "titles": [{
-            "title": fake.company() + "'s gallery",
-            "type": "Other",
-            "lang": "eng"
-        }],
+        "titles": {"cs": "neco"},
         "publication_date": fake_edtf_level_0(),
         "subjects": [{
-            "subject": "Romans",
+            "subject": {"cs": "neco"},
             "identifier": "subj-1",
             "scheme": "no-scheme"
         }],
@@ -143,23 +139,19 @@ def create_fake_record():
         }],
         "version": "v0.0.1",
         "licenses": [{
-            "license": "Berkeley Software Distribution 3",
+            "license": {"cs": "neco"},
             "uri": "https://opensource.org/licenses/BSD-3-Clause",
             "identifier": "BSD-3",
             "scheme": "BSD-3",
         }],
-        "descriptions": [{
-            "description": fake.text(max_nb_chars=3000),
-            "type": "Abstract",
-            "lang": "eng"
-        }],
+        "descriptions": {"cs": "neco"},
         "locations": [{
             "point": {
                 "lat": str(fake.latitude()),
                 "lon": str(fake.longitude())
             },
             "place": fake.location_on_land()[2],
-            "description": "Random place on land for random coordinates..."
+            "description": {"cs": "neco"},
         }],
         "references": [{
             "reference_string": "Reference to something et al.",
@@ -183,6 +175,7 @@ def create_fake_record():
     # )
     #
     # return identified_record
+    return data_to_use
 
 
 @click.group()

@@ -1,15 +1,19 @@
-import json
-
-import pytest
-from jsonschema import ValidationError
-
-
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2019 CESNET.
+# Copyright (C) 2020 CERN.
+# Copyright (C) 2020 Northwestern University.
 #
-# Invenio OpenID Connect is free software; you can redistribute it and/or modify it
-# under the terms of the MIT License; see LICENSE file for more details.
+# Invenio-RDM-Records is free software; you can redistribute it and/or modify
+# it under the terms of the MIT License; see LICENSE file for more details.
+
+"""Test jsonschema validation."""
+
+import json
+
+from invenio_jsonschemas import current_jsonschemas
+from invenio_records.api import Record
+
+
 def get_schema():
     """This function loads the given schema available"""
 
@@ -35,17 +39,3 @@ def test_json(app):
     data = json.loads('{"locations":[{"description": {"cs":"neco", "en-us":"neco jinyho"}, "place": "string"}]}')
     schema.validate(data, get_schema())
 
-    data = json.loads('{"licenses":[{"license": {"cs":"neco", "en-us":"neco jinyho"}}]}')
-    schema.validate(data, get_schema())
-
-    data = json.loads('{"titles" : {"cs": "jej", "enn": "yay"}}')
-    with pytest.raises(ValidationError):
-        schema.validate(data, get_schema())
-
-    data = json.loads('{"these": {"abstract" : {"css": "jej", "en": "yay"}}}')
-    with pytest.raises(ValidationError):
-        schema.validate(data, get_schema())
-
-    data = json.loads('{"titles": "jej"}')
-    with pytest.raises(ValidationError):
-        schema.validate(data, get_schema())

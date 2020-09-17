@@ -16,4 +16,5 @@ include *.md
 recursive-include oarepo_rdm_records *.py
 recursive-include oarepo_rdm_records *.json
 recursive-include tests *.json
+recursive-include tests *.csv
 
