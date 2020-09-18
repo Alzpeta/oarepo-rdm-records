@@ -1,20 +1,14 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2019 CERN.
-# Copyright (C) 2019 Northwestern University.
+# Copyright (C) 2019 CESNET.
 #
-# Invenio-RDM-Records is free software; you can redistribute it and/or modify
-# it under the terms of the MIT License; see LICENSE file for more details.
+# CIS theses repository is free software; you can redistribute it and/or modify it
+# under the terms of the MIT License; see LICENSE file for more details.
 
 """DataCite-based data model for Invenio."""
 
 from invenio_indexer.api import RecordIndexer
 from invenio_records_files.api import Record
-# from invenio_records_permissions import record_create_permission_factory, \
-#     record_delete_permission_factory, record_files_permission_factory, \
-#     record_read_permission_factory, record_search_permission_factory, \
-#     record_update_permission_factory
-# from invenio_records_permissions.api import RecordsSearch
 from invenio_records_rest.facets import terms_filter
 from invenio_records_rest.utils import allow_all
 from invenio_search import RecordsSearch
