@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2019-2020 CERN.
-# Copyright (C) 2019-2020 Northwestern University.
+# Copyright (C) 2020 CESNET
 #
-# Invenio-RDM-Records is free software; you can redistribute it and/or modify
-# it under the terms of the MIT License; see LICENSE file for more details.
+# CIS theses repository is free software; you can redistribute it and/or modify it
+# under the terms of the MIT License; see LICENSE file for more details.
 
 """JSON Schemas."""
 import time
@@ -39,26 +38,6 @@ from oarepo_multilingual.marshmallow import MultilingualStringV2
 #from ..vocabularies import Vocabularies
 from .fields import EDTFLevel0DateString
 from .utils import api_link_for, validate_iso639_3
-
-# def validate_entry(vocabulary_key, entry_key):
-#     """Validates if an entry is valid for a vocabulary.
-#
-#     :param vocabulary_key: str, Vocabulary key
-#     :param entry_key: str, specific entry key
-#
-#     raises marshmallow.ValidationError if entry is not valid.
-#     """
-#     vocabulary = Vocabularies.get_vocabulary(vocabulary_key)
-#     obj = vocabulary.get_entry_by_dict(entry_key)
-#     if not obj:
-#         raise ValidationError(vocabulary.get_invalid(entry_key))
-
-
-# class CommunitySchemaV1(BaseSchema):
-#     """Communities to which the record belongs to."""
-#
-#     primary = SanitizedUnicode(required=True)
-#     secondary = fields.List(SanitizedUnicode())
 
 
 # 'Fake' Identifiers Field
