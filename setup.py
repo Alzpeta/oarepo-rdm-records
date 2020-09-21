@@ -25,13 +25,7 @@ tests_require = [
     'pycountry',
     'faker',
     'oarepo-multilingual',
-    # 'pytest>=4.6.3',
-    # 'jsonschema',
-    # 'pydocstyle',
-    # 'isort',
-    # 'check-manifest',
     'oarepo-mapping-includes',
-    # 'pytest-cov'
 ]
 
 extras_require = {
@@ -61,15 +55,12 @@ setup(
     license="MIT",
     author="Alzbeta Pokorna",
     author_email="alzbeta.pokorna@cesnet.cz",
-    description="DCTerms support for OARepo (just selected props)",
+    description="OARepo rdm records data model",
     long_description=readme + '\n\n' + history,
     long_description_content_type='text/markdown',
     zip_safe=False,
     packages=['oarepo_rdm_records'],
     entry_points={
-        # 'oarepo_mapping_includes': [
-        #     'oarepo_rdm_records=oarepo_rdm_records.included_mappings'
-        # ],
         'invenio_search.mappings': [
             'records= oarepo_rdm_records.mappings',
         ],
