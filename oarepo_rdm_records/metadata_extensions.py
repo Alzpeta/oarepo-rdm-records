@@ -18,7 +18,7 @@ class MetadataExtensions(object):
     """Custom metadata extensions helper class."""
 
     def __init__(self, namespaces, extensions):
-        """Constructor.
+        """Do Constructor.
 
         :param namespaces: Namespaces dict
 
@@ -88,7 +88,7 @@ class MetadataExtensions(object):
         assert field_cfg['elasticsearch'] in allowed_types
 
     def _validate(self):
-        """Validates extension configuration.
+        """Validate extension configuration.
 
         We only allow certain types, so this private method flags divergence
         from what is allowed early.

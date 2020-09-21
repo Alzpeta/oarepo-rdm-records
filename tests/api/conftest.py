@@ -235,7 +235,7 @@ def app_config(db_uri, broker_uri, celery_config_ext):
 
 @pytest.fixture(scope='module')
 def base_app(create_app, app_config, request, default_handler):
-    """Base application fixture (without database, search and cache).
+    """Do Base application fixture (without database, search and cache).
 
     Scope: module.
 
@@ -379,7 +379,7 @@ def _es_delete_indexes(current_search):
 
 @pytest.fixture(scope='module')
 def es(appctx):
-    """Setup and teardown all registered Elasticsearch indices.
+    """Do Setup and teardown all registered Elasticsearch indices.
 
     Scope: module
 
@@ -411,7 +411,7 @@ def es_clear(es):
 
 @pytest.fixture(scope='module')
 def database(appctx):
-    """Setup database.
+    """Do Setup database.
 
     Scope: module
 
@@ -433,7 +433,7 @@ def database(appctx):
 
 @pytest.fixture(scope='function')
 def db(database):
-    """Creates a new database session for a test.
+    """Create a new database session for a test.
 
     Scope: function
 
@@ -590,7 +590,7 @@ def _get_screenshots_dir():
 
 @pytest.yield_fixture(scope='function')
 def location(db):
-    """Creates a simple default location for a test.
+    """Create a simple default location for a test.
 
     Scope: function
 
@@ -613,7 +613,7 @@ def location(db):
 
 @pytest.fixture(scope="function")
 def bucket_from_dir(db, location):
-    '''Creates a bucket from the specified directory.
+    '''Create a bucket from the specified directory.
 
     Scope: function
 
