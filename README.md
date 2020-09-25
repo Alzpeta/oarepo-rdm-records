@@ -27,11 +27,11 @@ Modified fields of data model
 ##### licenses
 - ```license``` is required oarepo multilingual data type
 
- [image]: https://img.shields.io/travis/oarepo-rdm-records/oarepo-rdm-records.svg
-  [1]: https://travis-ci.org/oarepo-rdm-records/oarepo-rdm-records
-  [2]: https://img.shields.io/coveralls/oarepo-rdm-records/oarepo-rdm-records.svg
-  [3]: https://coveralls.io/r/oarepo-rdm-records/oarepo-rdm-records
-  [4]: https://img.shields.io/github/license/oarepo-rdm-records/oarepo-rdm-records.svg
-  [5]: https://github.com/oarepo-rdm-records/oarepo-rdm-records/blob/master/LICENSE
+ [image]: https://img.shields.io/travis/oarepo/oarepo-rdm-records.svg
+  [1]: https://travis-ci.org/oarepo/oarepo-rdm-records
+  [2]: https://img.shields.io/coveralls/oarepo/oarepo-rdm-records.svg
+  [3]: https://coveralls.io/r/oarepo/oarepo-rdm-records
+  [4]: https://img.shields.io/github/license/oarepo/oarepo-rdm-records.svg
+  [5]: https://github.com/oarepo/oarepo-rdm-records/blob/master/LICENSE
   [6]: https://img.shields.io/pypi/v/oarepo-rdm-records.svg
   [7]: https://pypi.org/pypi/oarepo-rdm-records
