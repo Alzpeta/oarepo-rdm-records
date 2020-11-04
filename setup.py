@@ -67,6 +67,9 @@ setup(
         'invenio_search.mappings': [
             'records= oarepo_rdm_records.mappings',
         ],
+        'oarepo_mapping_includes':[
+          'oarepo_rdm_records = oarepo_rdm_records.included_mappings'
+        ],
         'invenio_jsonschemas.schemas': [
             'oarepo_rdm_records = oarepo_rdm_records.jsonschemas',
         ],
