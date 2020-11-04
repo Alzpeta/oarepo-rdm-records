@@ -64,9 +64,9 @@ setup(
     zip_safe=False,
     packages=['oarepo_rdm_records'],
     entry_points={
-        'invenio_search.mappings': [
-            'records= oarepo_rdm_records.mappings',
-        ],
+        # 'invenio_search.mappings': [
+        #     'records= oarepo_rdm_records.mappings',
+        # ],
         'oarepo_mapping_includes':[
           'oarepo_rdm_records = oarepo_rdm_records.included_mappings'
         ],
