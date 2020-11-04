@@ -10,6 +10,7 @@ OAREPO_VERSION = os.environ.get('OAREPO_VERSION', '3.3.0')
 
 
 install_requires = [
+    'wheel',
     'oarepo-mapping-includes',
     'idutils',
     'edtf',
@@ -21,6 +22,7 @@ install_requires = [
 ]
 
 tests_require = [
+    'wheel',
     'idutils',
     'edtf',
     'pycountry',
@@ -62,8 +64,11 @@ setup(
     zip_safe=False,
     packages=['oarepo_rdm_records'],
     entry_points={
-        'invenio_search.mappings': [
-            'records= oarepo_rdm_records.mappings',
+        # 'invenio_search.mappings': [
+        #     'records= oarepo_rdm_records.mappings',
+        # ],
+        'oarepo_mapping_includes':[
+          'oarepo_rdm_records = oarepo_rdm_records.included_mappings'
         ],
         'invenio_jsonschemas.schemas': [
             'oarepo_rdm_records = oarepo_rdm_records.jsonschemas',

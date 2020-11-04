@@ -1,7 +1,4 @@
 {
-  "mappings": {
-    "properties": {
-
   "RDMRecord": {
     "date_detection": false,
     "numeric_detection": false,
@@ -407,6 +404,3 @@
     }
   }
 }
-    }
-  }
-
