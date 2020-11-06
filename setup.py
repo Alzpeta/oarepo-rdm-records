@@ -29,6 +29,7 @@ tests_require = [
     'pycountry',
     'faker',
     'oarepo[tests]',
+    'pydocstyle',
     'oarepo-multilingual',
     'oarepo-mapping-includes',
 ]
