@@ -41,7 +41,7 @@ def test_json(app):
 
 def test_mapping(app):
     search = app.extensions['invenio-search']
-    with open(search.mappings['rdm-record-v2.0.0']) as f:
+    with open(search.mappings['test-test-v1.0.0.json']) as f:
         data = json.load(f)
     assert data == {
         "mappings": {
