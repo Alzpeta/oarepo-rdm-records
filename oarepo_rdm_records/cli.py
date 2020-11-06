@@ -28,7 +28,6 @@ from invenio_search import current_search
 
 def fake_resource_type():
     """Generate a fake resource_type."""
-    #vocabulary = Vocabularies.get_vocabulary('resource_type')
     _type = "xx"
     subtype = "xxx"
     return {
