@@ -17,7 +17,6 @@ install_requires = [
     'pycountry',
     'faker',
     'marshmallow',
-    'oarepo>=3.3.0',
     'oarepo-multilingual',
     'flask'
 ]
@@ -28,7 +27,6 @@ tests_require = [
     'edtf',
     'pycountry',
     'faker',
-    'oarepo[tests]',
     'pydocstyle',
     'oarepo-multilingual',
     'oarepo-mapping-includes',
