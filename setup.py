@@ -28,6 +28,7 @@ tests_require = [
     'edtf',
     'pycountry',
     'faker',
+    'oarepo[tests]',
     'oarepo-multilingual',
     'oarepo-mapping-includes',
 ]
