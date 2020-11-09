@@ -27,6 +27,7 @@ tests_require = [
     'edtf',
     'pycountry',
     'faker',
+    'pydocstyle',
     'oarepo-multilingual',
     'oarepo-mapping-includes',
 ]
@@ -64,10 +65,7 @@ setup(
     zip_safe=False,
     packages=['oarepo_rdm_records'],
     entry_points={
-        # 'invenio_search.mappings': [
-        #     'records= oarepo_rdm_records.mappings',
-        # ],
-        'oarepo_mapping_includes':[
+        'oarepo_mapping_includes': [
           'oarepo_rdm_records = oarepo_rdm_records.included_mappings'
         ],
         'invenio_jsonschemas.schemas': [

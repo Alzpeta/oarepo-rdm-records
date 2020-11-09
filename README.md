@@ -17,7 +17,7 @@ The library provides modified Invenio rdm records data model for OARepo.
 JSON Schema
 ----------
 Add this package to your dependencies and use it via $ref in json
-schema as ``"[server]/schemas/record-v2.0.0.json#/definitions/RDMRecord"``. 
+schema as ``"[server]/schemas/rdm-record-v2.0.0.json#/definitions/RDMRecord"``. 
 Elastic Search mapping is handled automatically via Eleastic Search templates.
 
 ### Usage example
@@ -27,7 +27,7 @@ Elastic Search mapping is handled automatically via Eleastic Search templates.
   "type": "object",
   "properties": {
     "these": {
-            "$ref": "https://localhost:5000/schemas/record-v2.0.0.json#/definitions/RDMRecord"
+            "$ref": "https://localhost:5000/schemas/rdm-record-v2.0.0.json#/definitions/RDMRecord"
       }
   }
 }

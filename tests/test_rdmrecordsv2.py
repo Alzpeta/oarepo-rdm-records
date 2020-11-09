@@ -3,13 +3,14 @@ import json
 import pytest
 from jsonschema import ValidationError
 
-
 # -*- coding: utf-8 -*-
 #
 # Copyright (C) 2019 CESNET.
 #
 # Invenio OpenID Connect is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
+
+
 def get_schema():
     """This function loads the given schema available"""
 
@@ -21,6 +22,20 @@ def get_schema():
             schema = json.load(file)
 
     return schema
+
+
+def get_mapping():
+    """This function loads the given schema available"""
+
+    try:
+        with open('test_module/mappings/v7/test/test-v1.0.0.json', 'r') as file:
+            mapping = json.load(file)
+    except:
+        with open('./tests/test_module/mappings/v7/test/test-v1.0.0.json', 'r') as file:
+            mapping = json.load(file)
+
+    return mapping
+
 
 def test_json(app):
     """Test of json schema with app."""
@@ -39,10 +54,9 @@ def test_json(app):
     with pytest.raises(ValidationError):
         schema.validate(data, get_schema())
 
+
 def test_mapping(app):
-    search = app.extensions['invenio-search']
-    with open(search.mappings['test-test-v1.0.0']) as f:
-        data = json.load(f)
+    data = get_mapping()
     assert data == {
         "mappings": {
             "properties": {
@@ -254,16 +268,8 @@ def test_mapping(app):
                                 }
                             }
                         },
-                        "titles": {"properties": {"cs": {"fields": {"keywords": {"type": "keyword"}},
-                                                                                                 "type": "text"},
-                                                                                          "en": {"fields": {"keywords": {"type": "keyword"}},
-                                                                                                 "type": "text"}},
-                                                                           "type": "object"},
-                        "subjects": {"properties": {"cs": {"fields": {"keywords": {"type": "keyword"}},
-                                                                                                 "type": "text"},
-                                                                                          "en": {"fields": {"keywords": {"type": "keyword"}},
-                                                                                                 "type": "text"}},
-                                                                           "type": "object"},
+                        "titles": {"type": "multilingual"},
+                        "subjects": {"type": "multilingual"},
                         "contributors": {
                             "type": "object",
                             "properties": {
@@ -349,11 +355,7 @@ def test_mapping(app):
                         "licenses": {
                             "type": "object",
                             "properties": {
-                                "license": {"properties": {"cs": {"fields": {"keywords": {"type": "keyword"}},
-                                                                                                 "type": "text"},
-                                                                                          "en": {"fields": {"keywords": {"type": "keyword"}},
-                                                                                                 "type": "text"}},
-                                                                           "type": "object"},
+                                "license": {"type": "multilingual"},
                                 "uri": {
                                     "type": "keyword"
                                 },
@@ -365,22 +367,14 @@ def test_mapping(app):
                                 }
                             }
                         },
-                        "descriptions": {"properties": {"cs": {"fields": {"keywords": {"type": "keyword"}},
-                                                                                                 "type": "text"},
-                                                                                          "en": {"fields": {"keywords": {"type": "keyword"}},
-                                                                                                 "type": "text"}},
-                                                                           "type": "object"},
+                        "descriptions": {"type": "multilingual"},
                         "locations": {
                             "type": "object",
                             "properties": {
                                 "place": {
                                     "type": "text"
                                 },
-                                "description": {"properties": {"cs": {"fields": {"keywords": {"type": "keyword"}},
-                                                                                                 "type": "text"},
-                                                                                          "en": {"fields": {"keywords": {"type": "keyword"}},
-                                                                                                 "type": "text"}},
-                                                                           "type": "object"},
+                                "description": {"type": "multilingual"},
                                 "point": {
                                     "type": "object",
                                     "properties": {
