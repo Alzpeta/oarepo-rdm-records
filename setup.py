@@ -10,7 +10,6 @@ OAREPO_VERSION = os.environ.get('OAREPO_VERSION', '3.3.0')
 
 
 install_requires = [
-    'wheel',
     'oarepo-mapping-includes',
     'idutils',
     'edtf',
@@ -22,7 +21,6 @@ install_requires = [
 ]
 
 tests_require = [
-    'wheel',
     'idutils',
     'edtf',
     'pycountry',
