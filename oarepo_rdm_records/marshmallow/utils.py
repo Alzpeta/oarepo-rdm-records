@@ -6,12 +6,31 @@
 # under the terms of the MIT License; see LICENSE file for more details.
 
 """Marshmallow utility functions."""
+from urllib import parse
 
 import pycountry
 from flask import current_app
 from flask_babelex import lazy_gettext as _
-from marshmallow import ValidationError
+from marshmallow import ValidationError, validate
 from six.moves.urllib.parse import quote
+
+
+def _no_duplicates(value_list):
+    str_list = [str(value) for value in value_list]
+    return len(value_list) == len(set(str_list))
+
+
+def _not_blank(error_msg):
+    """Returns a non-blank validation rule with custom error message."""
+    return validate.Length(min=1, error=error_msg)
+
+
+def _is_uri(uri):
+    try:
+        parse.urlparse(uri)
+        return True
+    except AttributeError:
+        return False
 
 
 def validate_iso639_3(value):

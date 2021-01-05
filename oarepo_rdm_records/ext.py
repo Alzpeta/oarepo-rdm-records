@@ -6,10 +6,6 @@
 # under the terms of the MIT License; see LICENSE file for more details.
 
 """DataCite-based data model for Invenio."""
-from celery import shared_task
-from invenio_db import db
-from invenio_files_rest.signals import file_deleted, file_uploaded
-from invenio_indexer.signals import before_record_index
 
 from . import config
 from .metadata_extensions import MetadataExtensions

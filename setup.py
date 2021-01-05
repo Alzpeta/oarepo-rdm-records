@@ -10,35 +10,25 @@ OAREPO_VERSION = os.environ.get('OAREPO_VERSION', '3.3.0')
 
 
 install_requires = [
+    'pycountry',
     'oarepo-mapping-includes',
+    'oarepo-invenio-model',
+    'oarepo-validate',
     'idutils',
     'edtf',
-    'pycountry',
-    'faker',
-    'marshmallow',
     'oarepo-multilingual',
-    'flask'
+    'marshmallow-utils'
 ]
 
 tests_require = [
-    'idutils',
-    'edtf',
-    'pycountry',
-    'faker',
     'pydocstyle',
-    'oarepo-multilingual',
-    'oarepo-mapping-includes',
 ]
 
 extras_require = {
     'tests': [
         *tests_require,
         'oarepo[tests]~={version}'.format(
-            version=OAREPO_VERSION)],
-    'tests-es7': [
-        *tests_require,
-        'oarepo[tests-es7]~={version}'.format(
-            version=OAREPO_VERSION)],
+            version=OAREPO_VERSION)]
 }
 
 setup_requires = [
@@ -53,7 +43,7 @@ with open(os.path.join('oarepo_rdm_records', 'version.py'), 'rt') as fp:
 setup(
     name="oarepo_rdm_records",
     version=version,
-    url="https://github.com/oarepo/oarepo-dc",
+    url="https://github.com/oarepo/oarepo-rdm-records",
     license="MIT",
     author="Alzbeta Pokorna",
     author_email="alzbeta.pokorna@cesnet.cz",
