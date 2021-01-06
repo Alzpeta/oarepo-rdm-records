@@ -11,7 +11,10 @@ from urllib import parse
 import pycountry
 from flask import current_app
 from flask_babelex import lazy_gettext as _
-from marshmallow import ValidationError, validate
+from invenio_rest.serializer import BaseSchema
+from marshmallow import ValidationError, validate, fields
+from marshmallow.fields import Nested
+from marshmallow.schema import SchemaMeta
 from six.moves.urllib.parse import quote
 
 
@@ -85,3 +88,27 @@ def api_link_for(tpl, **kwargs):
 
     return link_for(
         base.format(current_app.config['THEME_SITEURL']), tpl, **kwargs)
+
+
+def dump_empty(schema_or_field):
+    """Return a full json-compatible dict with empty values.
+    NOTE: This is only needed because the frontend needs it.
+          This might change soon.
+    """
+    if isinstance(schema_or_field, (BaseSchema,)):
+        schema = schema_or_field
+        return {k: dump_empty(v) for (k, v) in schema.fields.items()}
+    if isinstance(schema_or_field, SchemaMeta):
+        # NOTE: Nested fields can pass a Schema class (SchemaMeta)
+        #       or a Schema instance.
+        #       Schema classes need to be instantiated to get .fields
+        schema = schema_or_field()
+        return {k: dump_empty(v) for (k, v) in schema.fields.items()}
+    if isinstance(schema_or_field, fields.List):
+        field = schema_or_field
+        return [dump_empty(field.inner)]
+    if isinstance(schema_or_field, Nested):
+        field = schema_or_field
+        return dump_empty(field.nested)
+
+    return None

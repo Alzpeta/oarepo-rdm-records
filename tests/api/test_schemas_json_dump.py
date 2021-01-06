@@ -6,44 +6,34 @@
 # Invenio-RDM-Records is free software; you can redistribute it and/or modify
 # it under the terms of the MIT License; see LICENSE file for more details.
 
-import os
+from oarepo_rdm_records.marshmallow.dataset import DataSetMetadataSchemaV1
 
-from flask_babelex import lazy_gettext as _
-
-from oarepo_rdm_records.marshmallow.json import MetadataSchemaV1, dump_empty
-
-#from oarepo_rdm_records.vocabularies import Vocabularies
+from oarepo_rdm_records.marshmallow.utils import dump_empty
 
 
 def test_dumping_empty_record():
-    empty_record = dump_empty(MetadataSchemaV1())
+    empty_record = dump_empty(DataSetMetadataSchemaV1())
 
     assert empty_record == {
-        '_access': {'files_restricted': None, 'metadata_restricted': None},
+        '_access': {'access_condition': {'condition': None,
+                                         'default_link_validity': None},
+                    'access_right': None,
+                    'embargo_date': None,
+                    'files': None,
+                    'metadata': None,
+                    'owned_by': [None]},
+        '_bucket': None,
         '_default_preview': None,
-        '_communities': None,
-        '_contact': None,
         '_created_by': None,
         '_embargo_date': None,
-        '_files': [
-            {
-                'bucket': None,
-                'checksum': None,
-                'key': None,
-                'links': None,
-                'size': None,
-                'type': None
-            }
-        ],
-        '_internal_notes': [
-            {
-                'user': None,
-                'timestamp': None,
-                'note': None
-            }
-        ],
+        '_schema': None,
+        '_files': {},
+        'keywords': [None],
+        'language': {'code': None},
         '_owners': [None],
-        'access_right': None,
+        'abstract': {'description': None, 'type': None},
+        'additional_descriptions': [{'description': None, 'type': None}],
+        'additional_titles': [None],
         'contributors': [
             {
                 'affiliations': [
@@ -72,44 +62,24 @@ def test_dumping_empty_record():
                 'given_name': None,
                 'identifiers': None,
                 'name': None,
+                'role': None,
                 'type': None,
             }
         ],
         'dates': [
             {
                 'type': None,
-                'end': None,
+                'date': None,
                 'description': None,
-                'start': None
             }
         ],
-        'extensions': None,
-        'descriptions': None,
-        'language': None,
-        'locations': [
-            {
-                'description': None,
-                'point': {
-                    'lon': None,
-                    'lat': None
-                },
-                'place': None
-            }
-        ],
-        'licenses': [
-            {
-                'identifier': None,
-                'scheme': None,
-                'uri': None,
-                'license': None
-            }
-        ],
+        'id': None,
         'version': None,
         'publication_date': None,
         'references': [
             {
                 'scheme': None,
-                'reference_string': None,
+                'reference': None,
                 'identifier': None
             }
         ],
@@ -128,11 +98,9 @@ def test_dumping_empty_record():
             'subtype': None,
             'type': None
         },
-        'subjects': [{'subject': None, 'identifier': None, 'scheme': None}],
+        'rights': [{'identifier': None, 'rights': None, 'scheme': None, 'uri': None}],
         'titles': None,
         # TODO: Investigate the impact of these 2 fields on
         #       frontend to backend to frontend flow
-        'identifiers': None,
-        'recid': None
+        'identifiers': [{'identifier': None, 'scheme': None}],
     }
-

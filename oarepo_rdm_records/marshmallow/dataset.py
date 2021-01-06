@@ -8,7 +8,10 @@
 
 """RDM record schemas."""
 from invenio_records_rest.schemas import StrictKeysMixin
-from marshmallow import EXCLUDE, fields
+from flask_babelex import lazy_gettext as _
+from invenio_records_rest.schemas.fields import DateString
+from marshmallow import EXCLUDE, fields, validate
+from marshmallow.fields import Nested
 from marshmallow_utils.fields import EDTFDateString, SanitizedUnicode
 from oarepo_invenio_model.marshmallow import (
     InvenioRecordMetadataFilesMixin,
@@ -16,6 +19,7 @@ from oarepo_invenio_model.marshmallow import (
 )
 from oarepo_multilingual.marshmallow import MultilingualStringV2
 
+from oarepo_rdm_records.marshmallow import AccessSchema
 from oarepo_rdm_records.marshmallow.dates import DateSchema
 from oarepo_rdm_records.marshmallow.description import DescriptionSchema
 from oarepo_rdm_records.marshmallow.identifier import (
@@ -39,6 +43,15 @@ class DataSetMetadataSchemaV1(InvenioRecordMetadataFilesMixin,
         """Meta class."""
         unknown = EXCLUDE
 
+    # Administrative fields
+    _access = Nested(AccessSchema, required=False)
+    _owners = fields.List(fields.Integer, validate=validate.Length(min=1),
+                          required=True)
+    _created_by = fields.Integer(required=True)
+    _default_preview = SanitizedUnicode()
+    _embargo_date = DateString(data_key="embargo_date",
+                               attribute="embargo_date")
+
     # Metadata fields
     resource_type = fields.Nested(ResourceTypeSchema, required=True)
     identifiers = fields.List(fields.Nested(IdentifierSchema))
@@ -46,9 +59,9 @@ class DataSetMetadataSchemaV1(InvenioRecordMetadataFilesMixin,
     titles = MultilingualStringV2(required=True)
     creators = fields.List(fields.Nested(CreatorSchema), required=True)
     additional_titles = fields.List(fields.Nested(MultilingualStringV2))
-    abstract = DescriptionSchema(required=True),
-    version = SanitizedUnicode()
-    language = LanguageSchema()
+    abstract = fields.Nested(DescriptionSchema)
+    version = fields.Nested(SanitizedUnicode)
+    language = fields.Nested(LanguageSchema)
     keywords = fields.List(SanitizedUnicode)
     additional_descriptions = fields.List(fields.Nested(DescriptionSchema))
     rights = fields.List(fields.Nested(RightsSchema))

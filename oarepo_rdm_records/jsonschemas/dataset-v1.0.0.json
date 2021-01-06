@@ -454,18 +454,6 @@
                 }
               }
             },
-            "sizes": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            },
-            "formats": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            },
             "version": {
               "description": "Record version tag.",
               "type": "string"
@@ -520,80 +508,6 @@
                   },
                   "type": {
                     "$ref": "#/definitions/descriptionType"
-                  }
-                }
-              }
-            },
-            "locations": {
-              "description": "Geographical locations.",
-              "type": "array",
-              "items": {
-                "type": "object",
-                "additionalProperties": false,
-                "properties": {
-                  "geometry": {
-                    "type": "object",
-                    "properties": {
-                      "type": {
-                        "type": "string"
-                      },
-                      "coordinates": {
-                        "type": "array"
-                      }
-                    }
-                  },
-                  "identifiers": {
-                    "$ref": "#/definitions/identifiers"
-                  },
-                  "place": {
-                    "description": "Place of the location",
-                    "type": "string"
-                  },
-                  "description": {
-                    "description": "Description of the location",
-                    "type": "string"
-                  }
-                }
-              }
-            },
-            "funding": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "additionalProperties": false,
-                "properties": {
-                  "funder": {
-                    "type": "object",
-                    "additionalProperties": false,
-                    "properties": {
-                      "name": {
-                        "type": "string"
-                      },
-                      "identifier": {
-                        "$ref": "#/definitions/identifier"
-                      },
-                      "scheme": {
-                        "$ref": "#/definitions/scheme"
-                      }
-                    }
-                  },
-                  "award": {
-                    "type": "object",
-                    "additionalProperties": false,
-                    "properties": {
-                      "title": {
-                        "type": "string"
-                      },
-                      "number": {
-                        "type": "string"
-                      },
-                      "identifier": {
-                        "$ref": "#/definitions/identifier"
-                      },
-                      "scheme": {
-                        "$ref": "#/definitions/scheme"
-                      }
-                    }
                   }
                 }
               }

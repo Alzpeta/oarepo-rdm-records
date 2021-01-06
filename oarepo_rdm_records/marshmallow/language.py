@@ -8,8 +8,9 @@
 
 """RDM record schemas."""
 from invenio_records_rest.schemas import StrictKeysMixin
-from marshmallow import EXCLUDE, fields
+from marshmallow import EXCLUDE
 from marshmallow_utils.fields import SanitizedUnicode
+from oarepo_multilingual.marshmallow import validate_iso639_2
 
 
 class LanguageSchema(StrictKeysMixin):

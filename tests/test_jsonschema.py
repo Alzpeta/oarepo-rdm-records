@@ -18,10 +18,10 @@ def get_schema():
     """This function loads the given schema available"""
 
     try:
-        with open('../oarepo_rdm_records/jsonschemas/record-v1.0.0.json', 'r') as file:
+        with open('../oarepo_rdm_records/jsonschemas/dataset-v1.0.0.json', 'r') as file:
             schema = json.load(file)
     except:
-        with open('./oarepo_rdm_records/jsonschemas/record-v1.0.0.json', 'r') as file:
+        with open('./oarepo_rdm_records/jsonschemas/dataset-v1.0.0.json', 'r') as file:
             schema = json.load(file)
 
     return schema
