@@ -6,12 +6,34 @@
 # under the terms of the MIT License; see LICENSE file for more details.
 
 """Marshmallow utility functions."""
+from urllib import parse
 
 import pycountry
 from flask import current_app
 from flask_babelex import lazy_gettext as _
-from marshmallow import ValidationError
+from invenio_rest.serializer import BaseSchema
+from marshmallow import ValidationError, validate, fields
+from marshmallow.fields import Nested
+from marshmallow.schema import SchemaMeta
 from six.moves.urllib.parse import quote
+
+
+def _no_duplicates(value_list):
+    str_list = [str(value) for value in value_list]
+    return len(value_list) == len(set(str_list))
+
+
+def _not_blank(error_msg):
+    """Returns a non-blank validation rule with custom error message."""
+    return validate.Length(min=1, error=error_msg)
+
+
+def _is_uri(uri):
+    try:
+        parse.urlparse(uri)
+        return True
+    except AttributeError:
+        return False
 
 
 def validate_iso639_3(value):
@@ -66,3 +88,27 @@ def api_link_for(tpl, **kwargs):
 
     return link_for(
         base.format(current_app.config['THEME_SITEURL']), tpl, **kwargs)
+
+
+def dump_empty(schema_or_field):
+    """Return a full json-compatible dict with empty values.
+    NOTE: This is only needed because the frontend needs it.
+          This might change soon.
+    """
+    if isinstance(schema_or_field, (BaseSchema,)):
+        schema = schema_or_field
+        return {k: dump_empty(v) for (k, v) in schema.fields.items()}
+    if isinstance(schema_or_field, SchemaMeta):
+        # NOTE: Nested fields can pass a Schema class (SchemaMeta)
+        #       or a Schema instance.
+        #       Schema classes need to be instantiated to get .fields
+        schema = schema_or_field()
+        return {k: dump_empty(v) for (k, v) in schema.fields.items()}
+    if isinstance(schema_or_field, fields.List):
+        field = schema_or_field
+        return [dump_empty(field.inner)]
+    if isinstance(schema_or_field, Nested):
+        field = schema_or_field
+        return dump_empty(field.nested)
+
+    return None
