@@ -60,7 +60,7 @@ class DataSetMetadataSchemaV1(InvenioRecordMetadataFilesMixin,
     creators = fields.List(fields.Nested(CreatorSchema), required=True)
     additional_titles = fields.List(fields.Nested(MultilingualStringV2))
     abstract = fields.Nested(DescriptionSchema)
-    version = fields.Nested(SanitizedUnicode)
+    version = SanitizedUnicode()
     language = fields.Nested(LanguageSchema)
     keywords = fields.List(SanitizedUnicode)
     additional_descriptions = fields.List(fields.Nested(DescriptionSchema))
