@@ -12,7 +12,7 @@ import pycountry
 from flask import current_app
 from flask_babelex import lazy_gettext as _
 from invenio_rest.serializer import BaseSchema
-from marshmallow import ValidationError, validate, fields
+from marshmallow import ValidationError, fields, validate
 from marshmallow.fields import Nested
 from marshmallow.schema import SchemaMeta
 from six.moves.urllib.parse import quote
@@ -24,7 +24,7 @@ def _no_duplicates(value_list):
 
 
 def _not_blank(error_msg):
-    """Returns a non-blank validation rule with custom error message."""
+    """Return a non-blank validation rule with custom error message."""
     return validate.Length(min=1, error=error_msg)
 
 
@@ -92,6 +92,7 @@ def api_link_for(tpl, **kwargs):
 
 def dump_empty(schema_or_field):
     """Return a full json-compatible dict with empty values.
+
     NOTE: This is only needed because the frontend needs it.
           This might change soon.
     """

@@ -7,7 +7,6 @@
 # it under the terms of the MIT License; see LICENSE file for more details.
 
 from oarepo_rdm_records.marshmallow.dataset import DataSetMetadataSchemaV1
-
 from oarepo_rdm_records.marshmallow.utils import dump_empty
 
 

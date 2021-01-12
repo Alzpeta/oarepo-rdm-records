@@ -7,8 +7,8 @@
 # it under the terms of the MIT License; see LICENSE file for more details.
 
 """RDM record schemas."""
-from invenio_records_rest.schemas import StrictKeysMixin
 from flask_babelex import lazy_gettext as _
+from invenio_records_rest.schemas import StrictKeysMixin
 from invenio_records_rest.schemas.fields import DateString
 from marshmallow import EXCLUDE, fields, validate
 from marshmallow.fields import Nested
@@ -41,6 +41,7 @@ class DataSetMetadataSchemaV1(InvenioRecordMetadataFilesMixin,
 
     class Meta:
         """Meta class."""
+
         unknown = EXCLUDE
 
     # Administrative fields

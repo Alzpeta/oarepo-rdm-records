@@ -13,7 +13,12 @@ from .dates import DateSchema
 from .description import DescriptionSchema
 from .identifier import IdentifierSchema, RelatedIdentifierSchema
 from .language import LanguageSchema
-from .person import AffiliationSchema, ContributorSchema, CreatorSchema, CreatibutorSchema
+from .person import (
+    AffiliationSchema,
+    ContributorSchema,
+    CreatibutorSchema,
+    CreatorSchema,
+)
 from .pids import PIDSchema
 from .reference import ReferenceSchema
 from .resource import ResourceTypeSchema

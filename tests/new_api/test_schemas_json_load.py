@@ -10,9 +10,15 @@
 
 import pytest
 from marshmallow import ValidationError
+
 from oarepo_rdm_records.marshmallow import (
-    AffiliationSchema, CreatorSchema, ReferenceSchema, RelatedIdentifierSchema, DateSchema, RightsSchema,
-    ContributorSchema
+    AffiliationSchema,
+    ContributorSchema,
+    CreatorSchema,
+    DateSchema,
+    ReferenceSchema,
+    RelatedIdentifierSchema,
+    RightsSchema,
 )
 
 

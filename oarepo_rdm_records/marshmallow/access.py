@@ -15,6 +15,7 @@ from marshmallow_utils.fields import ISODateString, SanitizedUnicode
 
 class AccessConditionSchema(Schema):
     """Access condition schema.
+
     Conditions under which access to files are granted.
     """
 

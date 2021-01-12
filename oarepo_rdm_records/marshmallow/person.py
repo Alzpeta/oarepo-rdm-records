@@ -144,9 +144,11 @@ class CreatibutorSchema(StrictKeysMixin):
 
 class CreatorSchema(CreatibutorSchema):
     """Creator schema."""
+
     role = SanitizedUnicode()
 
 
 class ContributorSchema(CreatibutorSchema):
     """Contributor schema."""
+
     role = SanitizedUnicode(required=True)

@@ -18,6 +18,7 @@ class LanguageSchema(StrictKeysMixin):
 
     class Meta:
         """Meta class to discard unknown fields."""
+
         unknown = EXCLUDE
 
     code = SanitizedUnicode(required=True, validate=validate_iso639_2)
