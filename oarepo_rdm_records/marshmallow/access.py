@@ -29,7 +29,7 @@ class AccessSchema(Schema):
     metadata = fields.Bool(required=True)
     files = fields.Bool(required=True)
     owned_by = fields.List(
-        fields.Integer, validate=validate.Length(min=1), required=True)
+        fields.Integer, validate=validate.Length(min=1), required=False)
     access_right = SanitizedUnicode(required=True)
     embargo_date = ISODateString()
     access_condition = fields.Nested(AccessConditionSchema)

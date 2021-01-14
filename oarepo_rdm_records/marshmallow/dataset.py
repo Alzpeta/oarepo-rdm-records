@@ -9,7 +9,6 @@
 """RDM record schemas."""
 from flask_babelex import lazy_gettext as _
 from invenio_records_rest.schemas import StrictKeysMixin
-from invenio_records_rest.schemas.fields import DateString
 from marshmallow import EXCLUDE, fields, validate
 from marshmallow.fields import Nested
 from marshmallow_utils.fields import EDTFDateString, SanitizedUnicode
@@ -50,16 +49,14 @@ class DataSetMetadataSchemaV1(InvenioRecordMetadataFilesMixin,
                           required=True)
     _created_by = fields.Integer(required=True)
     _default_preview = SanitizedUnicode()
-    _embargo_date = DateString(data_key="embargo_date",
-                               attribute="embargo_date")
 
     # Metadata fields
     resource_type = fields.Nested(ResourceTypeSchema, required=True)
     identifiers = fields.List(fields.Nested(IdentifierSchema))
     publication_date = EDTFDateString(required=True)
-    titles = MultilingualStringV2(required=True)
+    titles = fields.List(MultilingualStringV2())
     creators = fields.List(fields.Nested(CreatorSchema), required=True)
-    additional_titles = fields.List(fields.Nested(MultilingualStringV2))
+    additional_titles = fields.List(MultilingualStringV2())
     abstract = fields.Nested(DescriptionSchema)
     version = SanitizedUnicode()
     language = fields.Nested(LanguageSchema)
