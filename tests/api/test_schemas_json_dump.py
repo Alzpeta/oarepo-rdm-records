@@ -24,7 +24,6 @@ def test_dumping_empty_record():
         '_bucket': None,
         '_default_preview': None,
         '_created_by': None,
-        '_embargo_date': None,
         '_schema': None,
         '_files': {},
         'keywords': [None],
