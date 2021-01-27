@@ -97,7 +97,7 @@ def test_dumping_empty_record():
             'type': None
         },
         'rights': [{'identifier': None, 'rights': None, 'scheme': None, 'uri': None}],
-        'titles': None,
+        'titles': [None],
         # TODO: Investigate the impact of these 2 fields on
         #       frontend to backend to frontend flow
         'identifiers': [{'identifier': None, 'scheme': None}],
