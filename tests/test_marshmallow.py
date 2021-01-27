@@ -20,7 +20,7 @@ class MD(DataSetMetadataSchemaV1, marshmallow.Schema):
 def test_marshmallow_app(app):
     "Test marshmallow with app"
     app.config.update(SUPPORTED_LANGUAGES=["cs", "en"])
-    data = {"titles": {"cs": "jej"},
+    data = {"titles": [{"cs": "jej"}],
             "_created_by": 5,
             "publication_date": "2020-05-12",
             "creators": [{"given_name": "jmeno",
@@ -47,7 +47,7 @@ def test_marshmallow():
     """Test marshmallow."""
 
 
-    data = {"titles":{"cs": "jej"},
+    data = {"titles":[{"cs": "jej"}],
             "_created_by": 5,
             "publication_date": "2020-05-12",
             "creators": [{"family_name": "prijmeno",
@@ -59,7 +59,7 @@ def test_marshmallow():
 
     assert data == MD().load(data)
 
-    data = {"titles": {"cs": "jej"},
+    data = {"titles": [{"cs": "jej"}],
             "abstract": {
                 "description": {"cs": "jej"},
                 "type": "abstract"

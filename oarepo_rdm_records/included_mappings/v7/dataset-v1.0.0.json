@@ -157,7 +157,12 @@
         }
       },
       "language": {
-        "type": "keyword"
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "keyword"
+          }
+        }
       },
       "related_identifiers": {
         "type": "object",
