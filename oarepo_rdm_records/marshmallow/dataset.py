@@ -54,7 +54,7 @@ class DataSetMetadataSchemaV1(InvenioRecordMetadataFilesMixin,
     resource_type = fields.Nested(ResourceTypeSchema, required=True)
     identifiers = fields.List(fields.Nested(IdentifierSchema))
     publication_date = EDTFDateString(required=True)
-    titles = MultilingualStringV2(required=True)
+    titles = fields.List(MultilingualStringV2(), required=True)
     creators = fields.List(fields.Nested(CreatorSchema), required=True)
     additional_titles = fields.List(MultilingualStringV2())
     abstract = fields.Nested(DescriptionSchema)
