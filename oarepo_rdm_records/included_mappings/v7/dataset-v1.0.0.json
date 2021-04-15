@@ -3,8 +3,6 @@
     "oarepo:extends": [
       "invenio-v1.0.0.json#/InvenioRecord"
     ],
-    "date_detection": false,
-    "numeric_detection": false,
     "properties": {
       "_access": {
         "type": "object",
