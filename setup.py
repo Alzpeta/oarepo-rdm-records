@@ -17,7 +17,7 @@ install_requires = [
     'idutils',
     'edtf',
     'oarepo-multilingual',
-    'marshmallow-utils'
+    'marshmallow-utils>=0.4.0'
 ]
 
 tests_require = [

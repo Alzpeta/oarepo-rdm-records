@@ -9,36 +9,81 @@
 """RDM record schemas."""
 
 import arrow
-from marshmallow import Schema, ValidationError, fields, validate, validates
-from marshmallow_utils.fields import ISODateString, SanitizedUnicode
+from marshmallow import Schema, ValidationError, fields, validates, validates_schema
+from marshmallow_utils.fields import ISODateString, SanitizedUnicode, NestedAttribute
 
 
-class AccessConditionSchema(Schema):
-    """Access condition schema.
+class Agent(Schema):
+    """An agent schema."""
 
-    Conditions under which access to files are granted.
-    """
+    user = fields.Integer(required=True)
 
-    condition = fields.String()
-    default_link_validity = fields.Integer()
+
+class EmbargoSchema(Schema):
+    """Schema for an embargo on the record."""
+
+    active = fields.Bool(allow_none=True, missing=None)
+    until = ISODateString(allow_none=True, missing=None)
+    reason = SanitizedUnicode(allow_none=True, missing=None)
+
+    @validates_schema
+    def validate_embargo(self, data, **kwargs):
+        """Validate that the properties are consistent with each other."""
+        if data.get("until") is not None:
+            until_date = arrow.get(data.get("until"))
+        else:
+            until_date = None
+
+        if data.get("active", False):
+            # 'active' is set to True => 'until' must be set to a future date
+            if until_date is None or until_date < arrow.utcnow():
+                raise ValidationError(
+                    _("Embargo end date must be set to a future date "
+                      "if active is True."),
+                    field_name="until",
+                )
+
+        elif data.get("active", None) is not None:
+            # 'active' is set to False => 'until' must be either set to a past
+            #                             date, or not set at all
+            if until_date is not None and until_date > arrow.utcnow():
+                raise ValidationError(
+                    _("Embargo end date must be unset or in the past "
+                      "if active is False."),
+                    field_name="until",
+                )
 
 
 class AccessSchema(Schema):
     """Access schema."""
 
-    metadata = fields.Bool(required=True)
-    files = fields.Bool(required=True)
-    owned_by = fields.List(
-        fields.Integer, validate=validate.Length(min=1), required=False)
-    access_right = SanitizedUnicode(required=True)
-    embargo_date = ISODateString()
-    access_condition = fields.Nested(AccessConditionSchema)
+    record = SanitizedUnicode(required=True)
+    files = SanitizedUnicode(required=True)
+    embargo = NestedAttribute(EmbargoSchema)
+    owned_by = fields.List(fields.Nested(Agent))
 
-    @validates('embargo_date')
-    def validate_embargo_date(self, value):
-        """Validate that embargo date is in the future."""
-        if arrow.get(value).date() <= arrow.utcnow().date():
+    def validate_protection_value(self, value, field_name):
+        """Check that the protection value is valid."""
+        if value not in ["public", "restricted"]:
             raise ValidationError(
-                _('Embargo date must be in the future.'),
-                field_names=['embargo_date']
+                _(f"'{field_name}' must be either 'public' or 'restricted'"),
+                "record"
             )
+
+    def get_attribute(self, obj, key, default):
+        """Override from where we get attributes when serializing."""
+        if key in ["record", "files"]:
+            return getattr(obj.protection, key, default)
+        elif key == "status":
+            return obj.status.value
+        return getattr(obj, key, default)
+
+    @validates("record")
+    def validate_record_protection(self, value):
+        """Validate the record protection value."""
+        self.validate_protection_value(value, "record")
+
+    @validates("files")
+    def validate_files_protection(self, value):
+        """Validate the files protection value."""
+        self.validate_protection_value(value, "files")

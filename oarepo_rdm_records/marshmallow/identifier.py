@@ -8,38 +8,17 @@
 
 """RDM record schemas."""
 
-from urllib import parse
-
 from flask_babelex import lazy_gettext as _
 from marshmallow import (
-    EXCLUDE,
-    INCLUDE,
-    Schema,
-    ValidationError,
-    fields,
     validate,
-    validates_schema,
 )
-from marshmallow_utils.fields import EDTFDateString, ISOLangString, SanitizedUnicode
-from marshmallow_utils.schemas import GeometryObjectSchema
+from marshmallow_utils.fields import SanitizedUnicode
+from marshmallow_utils.schemas import IdentifierSchema
 
-from oarepo_rdm_records.marshmallow.resource import ResourceTypeSchema
-from oarepo_rdm_records.marshmallow.utils import _not_blank
-
-
-class IdentifierSchema(Schema):
-    """Identifier schema.
-
-    NOTE: Equivalent to DataCite's alternate identifier.
-    """
-
-    identifier = SanitizedUnicode(
-        required=True, validate=_not_blank(_('Identifier cannot be blank.')))
-    scheme = SanitizedUnicode(
-        required=True, validate=_not_blank(_('Scheme cannot be blank.')))
+from oarepo_rdm_records.marshmallow.resource import ResourceType
 
 
-class RelatedIdentifierSchema(Schema):
+class RelatedIdentifierSchema(IdentifierSchema):
     """Related identifier schema."""
 
     RELATIONS = [
@@ -100,17 +79,12 @@ class RelatedIdentifierSchema(Schema):
         "w3id"
     ]
 
-    identifier = SanitizedUnicode(
-        required=True,
-        validate=_not_blank(_('Identifier cannot be blank.'))
-    )
-    scheme = SanitizedUnicode(required=True, validate=validate.OneOf(
-        choices=SCHEMES,
-        error=_('Invalid related identifier scheme. ' +
-                '{input} not one of {choices}.')
-    ))
+    def __init__(self, **kwargs):
+        """Constructor."""
+        super().__init__(allowed_schemes=self.SCHEMES, **kwargs)
+
     relation_type = SanitizedUnicode(required=True, validate=validate.OneOf(
         choices=RELATIONS,
         error=_('Invalid relation type. {input} not one of {choices}.')
     ))
-    resource_type = fields.Nested(ResourceTypeSchema)
+    resource_type = ResourceType()

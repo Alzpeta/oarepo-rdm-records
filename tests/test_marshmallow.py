@@ -10,29 +10,28 @@ import marshmallow
 import pytest
 from marshmallow import ValidationError
 
-from oarepo_rdm_records.marshmallow.dataset import DataSetMetadataSchemaV1
+from oarepo_rdm_records.marshmallow.dataset import DataSetMetadataSchemaV2
 
 
-class MD(DataSetMetadataSchemaV1, marshmallow.Schema):
+class MD(DataSetMetadataSchemaV2, marshmallow.Schema):
     pass
 
 
 def test_marshmallow_app(app):
-    "Test marshmallow with app"
+    """Test marshmallow with app."""
     app.config.update(SUPPORTED_LANGUAGES=["cs", "en"])
-    data = {"titles": [{"cs": "jej"}],
-            "_created_by": 5,
+    data = {"title": {"cs": "jej"},
+            "abstract": {"cs": "joj"},
             "publication_date": "2020-05-12",
-            "creators": [{"given_name": "jmeno",
-                          "family_name": "prijmeni",
-                          "name": "prijmeni, jmeno",
-                          "type": "personal"}],
-            "_owners": [5],
+            "creators": [{'person_or_org': {"given_name": "jmeno",
+                                            "family_name": "prijmeni",
+                                            "name": "prijmeni, jmeno",
+                                            "type": "personal"}}],
             "resource_type": {"type": "schema"}}
 
     assert data == MD().load(data)
 
-    data = {"titles": {"fr": "jej"},
+    data = {"title": {"fr": "jej"},
             "_created_by": 5,
             "publication_date": "2020-05-12",
             "creators": [{'name': 'jmeno', "type": "personal"}],
@@ -46,41 +45,32 @@ def test_marshmallow_app(app):
 def test_marshmallow():
     """Test marshmallow."""
 
-
-    data = {"titles":[{"cs": "jej"}],
-            "_created_by": 5,
+    data = {"title": {"cs": "jej"},
+            "abstract": {"cs": "jjo"},
             "publication_date": "2020-05-12",
-            "creators": [{"family_name": "prijmeno",
-                          "given_name": "jmeno",
-                          'name': 'prijmeno, jmeno',
-                          "type": "personal"}],
-            "_owners": [5],
+            "creators": [{'person_or_org': {"family_name": "prijmeno",
+                                            "given_name": "jmeno",
+                                            'name': 'prijmeno, jmeno',
+                                            "type": "personal"}}],
             "resource_type": {"type": "schema"}}
 
     assert data == MD().load(data)
 
-    data = {"titles": [{"cs": "jej"}],
-            "abstract": {
-                "description": {"cs": "jej"},
-                "type": "abstract"
-            },
-            "rights": [{"rights": "free to play"}],
-            "_created_by": 5,
+    data = {"title": {"cs": "jej"},
+            "abstract": {"cs": "jej"},
+            "rights": [{"title": "free to play"}],
             "publication_date": "2020-05-12",
-            "creators": [{"given_name": "jmeno",
-                          "family_name": "prijemno",
-                          'name': 'prijemno, jmeno',
-                          "type": "personal"}],
-            "_owners": [5],
+            "creators": [{'person_or_org': {"given_name": "jmeno",
+                                            "family_name": "prijemno",
+                                            'name': 'prijemno, jmeno',
+                                            "type": "personal"}}],
             "resource_type": {"type": "schema"}}
 
     assert data == MD().load(data)
 
-    data = {"titles": {"css": "jej"},
-            "_created_by": 5,
+    data = {"title": {"css": "jej"},
             "publication_date": "2020-05-12",
-            "creators": [{'name': 'jmeno', "type": "Personal"}],
-            "_owners": [5],
+            "creators": [{'person_or_org': {'name': 'jmeno', "type": "Personal"}}],
             "resource_type": {"type": "schema"}}
 
     with pytest.raises(ValidationError):

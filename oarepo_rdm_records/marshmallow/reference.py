@@ -8,23 +8,11 @@
 
 """RDM record schemas."""
 
-from urllib import parse
-
-from flask_babelex import lazy_gettext as _
-from marshmallow import (
-    EXCLUDE,
-    INCLUDE,
-    Schema,
-    ValidationError,
-    fields,
-    validate,
-    validates_schema,
-)
-from marshmallow_utils.fields import EDTFDateString, ISOLangString, SanitizedUnicode
-from marshmallow_utils.schemas import GeometryObjectSchema
+from marshmallow_utils.fields import SanitizedUnicode
+from marshmallow_utils.schemas import IdentifierSchema
 
 
-class ReferenceSchema(Schema):
+class ReferenceSchema(IdentifierSchema):
     """Reference schema."""
 
     SCHEMES = [
@@ -33,9 +21,10 @@ class ReferenceSchema(Schema):
         "crossreffunderid",
         "other"
     ]
+
+    def __init__(self, **kwargs):
+        """Constructor."""
+        super().__init__(allowed_schemes=self.SCHEMES,
+                         identifier_required=False, **kwargs)
+
     reference = SanitizedUnicode(required=True)
-    identifier = SanitizedUnicode()
-    scheme = SanitizedUnicode(validate=validate.OneOf(
-        choices=SCHEMES,
-        error=_('Invalid reference scheme. {input} not one of {choices}.')
-    ))

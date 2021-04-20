@@ -7,18 +7,13 @@
 # it under the terms of the MIT License; see LICENSE file for more details.
 
 """RDM record schemas."""
-from invenio_records_rest.schemas import StrictKeysMixin
-from marshmallow import EXCLUDE
+from marshmallow import Schema, fields
 from marshmallow_utils.fields import SanitizedUnicode
-from oarepo_multilingual.marshmallow import validate_iso639_2
 
 
-class LanguageSchema(StrictKeysMixin):
+class LanguageSchema(Schema):
     """Language schema."""
 
-    class Meta:
-        """Meta class to discard unknown fields."""
-
-        unknown = EXCLUDE
-
-    code = SanitizedUnicode(required=True, validate=validate_iso639_2)
+    id = SanitizedUnicode(required=True)
+    title = fields.Raw(dump_only=True)
+    description = fields.Raw(dump_only=True)

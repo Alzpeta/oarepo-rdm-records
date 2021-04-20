@@ -6,12 +6,12 @@
 # Invenio-RDM-Records is free software; you can redistribute it and/or modify
 # it under the terms of the MIT License; see LICENSE file for more details.
 
-from oarepo_rdm_records.marshmallow.dataset import DataSetMetadataSchemaV1
+from oarepo_rdm_records.marshmallow.dataset import DataSetMetadataSchemaV2
 from oarepo_rdm_records.marshmallow.utils import dump_empty
 
 
 def test_dumping_empty_record():
-    empty_record = dump_empty(DataSetMetadataSchemaV1())
+    empty_record = dump_empty(DataSetMetadataSchemaV2())
 
     assert empty_record == {
         '_access': {'access_condition': {'condition': None,

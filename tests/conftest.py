@@ -48,7 +48,7 @@ def app(request):
             'SQLALCHEMY_DATABASE_URI', 'sqlite:///test.db'
         ),
         SQLALCHEMY_TRACK_MODIFICATIONS=True,
-        SUPPORTED_LANGUAGES = ["cs", "en"],
+        SUPPORTED_LANGUAGES=["cs", "en"],
         TESTING=True,
         ELASTICSEARCH_DEFAULT_LANGUAGE_TEMPLATE={
             "type": "text",

@@ -12,14 +12,13 @@ import pytest
 from marshmallow import ValidationError
 
 from oarepo_rdm_records.marshmallow import (
-    AffiliationSchema,
     ContributorSchema,
-    CreatorSchema,
     DateSchema,
     ReferenceSchema,
     RelatedIdentifierSchema,
     RightsSchema,
 )
+from oarepo_rdm_records.marshmallow.person import AffiliationSchema, CreatorSchema
 
 
 def test_affiliations():

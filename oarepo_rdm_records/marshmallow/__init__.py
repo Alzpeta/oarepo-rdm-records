@@ -8,24 +8,18 @@
 """Schemas for marshmallow."""
 
 from .access import AccessSchema
-from .dataset import DataSetMetadataSchemaV1
 from .dates import DateSchema
-from .description import DescriptionSchema
-from .identifier import IdentifierSchema, RelatedIdentifierSchema
+from .identifier import RelatedIdentifierSchema
 from .language import LanguageSchema
 from .person import (
-    AffiliationSchema,
     ContributorSchema,
-    CreatibutorSchema,
-    CreatorSchema,
 )
 from .pids import PIDSchema
 from .reference import ReferenceSchema
-from .resource import ResourceTypeSchema
 from .rights import RightsSchema
 
-__all__ = ('DataSetMetadataSchemaV1', 'AccessSchema',
-           'DateSchema', 'DescriptionSchema', 'IdentifierSchema',
-           'RelatedIdentifierSchema', 'LanguageSchema', 'AffiliationSchema',
-           'ContributorSchema', 'CreatorSchema', 'CreatibutorSchema',
-           'PIDSchema', 'ReferenceSchema', 'ResourceTypeSchema', 'RightsSchema')
+__all__ = ('AccessSchema',
+           'DateSchema',
+           'RelatedIdentifierSchema', 'LanguageSchema',
+           'ContributorSchema',
+           'PIDSchema', 'ReferenceSchema', 'RightsSchema')

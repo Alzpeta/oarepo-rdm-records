@@ -32,7 +32,7 @@ class DateSchema(Schema):
 
     date = EDTFDateString(required=True)
     type = fields.Str(required=True, validate=validate.OneOf(
-        choices=DATE_TYPES,
-        error=_('Invalid date type. {input} not one of {choices}.')
-    ))
+            choices=DATE_TYPES,
+            error=_('Invalid date type. {input} not one of {choices}.')
+        ))
     description = fields.Str()

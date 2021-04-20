@@ -233,7 +233,7 @@
     },
     "DataSet": {
       "id": "#dataset",
-      "title": "OARepoRDM DataSet Record v3.0.0",
+      "title": "OARepoRDM DataSet Record v1.0.0",
       "type": "object",
       "additionalProperties": false,
       "properties": {
