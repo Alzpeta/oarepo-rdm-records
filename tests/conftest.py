@@ -18,7 +18,8 @@ from pathlib import Path
 import pytest
 from flask import Flask
 from invenio_base.signals import app_loaded
-from invenio_db import InvenioDB, db as db_
+from invenio_db import InvenioDB
+from invenio_db import db as db_
 from invenio_indexer import InvenioIndexer
 from invenio_jsonschemas import InvenioJSONSchemas
 from invenio_pidstore import InvenioPIDStore
@@ -26,9 +27,9 @@ from invenio_records import InvenioRecords
 from invenio_search import InvenioSearch
 from oarepo_mapping_includes.ext import OARepoMappingIncludesExt
 from oarepo_references import OARepoReferences
-from oarepo_taxonomies.cli import init_db, import_taxonomy
+from oarepo_taxonomies.cli import import_taxonomy, init_db
 from oarepo_taxonomies.ext import OarepoTaxonomies
-from sqlalchemy_utils import database_exists, drop_database, create_database
+from sqlalchemy_utils import create_database, database_exists, drop_database
 
 
 @pytest.yield_fixture(scope="module")

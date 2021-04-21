@@ -11,7 +11,7 @@ from functools import partial
 
 from flask_babelex import lazy_gettext as _
 from invenio_records_rest.schemas import StrictKeysMixin
-from marshmallow import fields, pre_load, validate, validates, post_load, ValidationError
+from marshmallow import fields, pre_load, validate, validates
 from marshmallow_utils.fields import (
     EDTFDateString,
     IdentifierSet,
@@ -32,7 +32,7 @@ from oarepo_rdm_records.marshmallow.identifier import (
     IdentifierSchema,
     RelatedIdentifierSchema,
 )
-from oarepo_rdm_records.marshmallow.mixins import TitledMixin, RightsMixin
+from oarepo_rdm_records.marshmallow.mixins import RightsMixin, TitledMixin
 from oarepo_rdm_records.marshmallow.person import ContributorSchema, CreatorSchema
 from oarepo_rdm_records.marshmallow.pids import PIDSchema
 from oarepo_rdm_records.marshmallow.reference import ReferenceSchema

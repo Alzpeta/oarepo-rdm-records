@@ -7,17 +7,14 @@
 # it under the terms of the MIT License; see LICENSE file for more details.
 
 """RDM record schemas."""
-from flask_babelex import lazy_gettext as _
 from invenio_records_rest.schemas import StrictKeysMixin
-
-from marshmallow import validate
 from marshmallow.fields import URL, Nested
-from marshmallow_utils.fields import SanitizedUnicode
 from oarepo_multilingual.marshmallow import MultilingualStringV2
 
 
 class TitledMixin:
     """Mixin that adds a multilingual title field to Schema."""
+
     title = MultilingualStringV2()
 
 
@@ -30,6 +27,8 @@ class RightsMixin:
             fail_on_unknown=False, identifier_required=False, **kwargs)
 
     class RightsRelated(StrictKeysMixin):
+        """Related rights URI."""
+
         uri = URL()
 
     icon = URL()
