@@ -17,11 +17,12 @@ class MD(DataSetMetadataSchemaV2, marshmallow.Schema):
     pass
 
 
-def test_marshmallow_app(app):
+def test_marshmallow_app(app, db):
     """Test marshmallow with app."""
     app.config.update(SUPPORTED_LANGUAGES=["cs", "en"])
     data = {"title": {"cs": "jej"},
             "abstract": {"cs": "joj"},
+            "languages": [{"links": {"self": "http://localhost/2.0/taxonomies/languages/cze"}}],
             "publication_date": "2020-05-12",
             "creators": [{'person_or_org': {"given_name": "jmeno",
                                             "family_name": "prijmeni",
@@ -29,13 +30,15 @@ def test_marshmallow_app(app):
                                             "type": "personal"}}],
             "resource_type": {"type": "schema"}}
 
-    assert data == MD().load(data)
+    resolved = MD().load(data)
+    data.pop('languages')
+    resolved.pop('languages')
+    assert data == resolved
 
     data = {"title": {"fr": "jej"},
             "_created_by": 5,
             "publication_date": "2020-05-12",
             "creators": [{'name': 'jmeno', "type": "personal"}],
-            "_owners": [5],
             "resource_type": {"type": "schema"}}
 
     with pytest.raises(ValidationError):
@@ -58,15 +61,17 @@ def test_marshmallow():
 
     data = {"title": {"cs": "jej"},
             "abstract": {"cs": "jej"},
-            "rights": [{"title": "free to play"}],
+            "rights": [{'links': {'self': 'http://localhost/2.0/taxonomies/licenses/copyright'}}],
             "publication_date": "2020-05-12",
             "creators": [{'person_or_org': {"given_name": "jmeno",
                                             "family_name": "prijemno",
                                             'name': 'prijemno, jmeno',
                                             "type": "personal"}}],
             "resource_type": {"type": "schema"}}
-
-    assert data == MD().load(data)
+    resolved = MD().load(data)
+    data.pop('rights')
+    resolved.pop('rights')
+    assert data == resolved
 
     data = {"title": {"css": "jej"},
             "publication_date": "2020-05-12",

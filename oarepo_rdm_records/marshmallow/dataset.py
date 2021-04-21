@@ -7,28 +7,24 @@
 # it under the terms of the MIT License; see LICENSE file for more details.
 
 """RDM record schemas."""
-from datetime import timezone
 from functools import partial
 
 from flask_babelex import lazy_gettext as _
 from invenio_records_rest.schemas import StrictKeysMixin
-from marshmallow import Schema, fields, post_dump, pre_load, validate, validates
-from marshmallow.schema import BaseSchema
+from marshmallow import fields, pre_load, validate, validates, post_load, ValidationError
 from marshmallow_utils.fields import (
     EDTFDateString,
     IdentifierSet,
-    Links,
     NestedAttribute,
     SanitizedHTML,
     SanitizedUnicode,
-    TZDateTime,
 )
-from marshmallow_utils.permissions import FieldPermissionsMixin
 from oarepo_invenio_model.marshmallow import (
     InvenioRecordMetadataFilesMixin,
     InvenioRecordMetadataSchemaV1Mixin,
 )
 from oarepo_multilingual.marshmallow import MultilingualStringV2
+from oarepo_taxonomies.marshmallow import TaxonomyField
 
 from oarepo_rdm_records.marshmallow.access import AccessSchema
 from oarepo_rdm_records.marshmallow.dates import DateSchema
@@ -36,12 +32,11 @@ from oarepo_rdm_records.marshmallow.identifier import (
     IdentifierSchema,
     RelatedIdentifierSchema,
 )
-from oarepo_rdm_records.marshmallow.language import LanguageSchema
+from oarepo_rdm_records.marshmallow.mixins import TitledMixin, RightsMixin
 from oarepo_rdm_records.marshmallow.person import ContributorSchema, CreatorSchema
 from oarepo_rdm_records.marshmallow.pids import PIDSchema
 from oarepo_rdm_records.marshmallow.reference import ReferenceSchema
 from oarepo_rdm_records.marshmallow.resource import ResourceType
-from oarepo_rdm_records.marshmallow.rights import RightsSchema
 from oarepo_rdm_records.marshmallow.subject import SubjectSchema
 
 
@@ -65,14 +60,14 @@ class DataSetMetadataSchemaV2(InvenioRecordMetadataFilesMixin,
     subjects = fields.List(fields.Nested(SubjectSchema))
     contributors = fields.List(fields.Nested(ContributorSchema))
     dates = fields.List(fields.Nested(DateSchema))
-    languages = fields.List(fields.Nested(LanguageSchema))
+    languages = TaxonomyField(mixins=[TitledMixin], many=True)
     # alternate identifiers
     identifiers = IdentifierSet(
         fields.Nested(partial(IdentifierSchema, fail_on_unknown=False))
     )
     related_identifiers = fields.List(fields.Nested(RelatedIdentifierSchema))
     version = SanitizedUnicode()
-    rights = fields.List(fields.Nested(RightsSchema))
+    rights = TaxonomyField(mixins=[TitledMixin, RightsMixin], many=True)
     abstract = MultilingualStringV2(required=True)  # WARNING: May contain user-input HTML
     additional_descriptions = fields.List(MultilingualStringV2())
     references = fields.List(fields.Nested(ReferenceSchema))

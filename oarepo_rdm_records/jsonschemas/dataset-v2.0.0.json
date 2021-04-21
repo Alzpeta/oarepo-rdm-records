@@ -87,7 +87,7 @@
                     "required": ["person_or_org"],
                     "properties": {
                         "person_or_org": {"$ref": "rdm-definitions-v1.0.0.json#/person_or_org"},
-                        "role": {"type": "string"},
+                        "role": { "$ref": "../taxonomy-v2.0.0.json#/definitions/Term" },
                         "affiliations": {"$ref": "rdm-definitions-v1.0.0.json#/affiliations"}
                     }
                   }
@@ -156,9 +156,10 @@
                   }
                 },
                 "languages": {
-                  "description": "The primary language of the resource. ISO 639-2 language code.",
+                  "description": "The primary language of the resource. ISO 639-2 B language code.",
                   "type": "array",
-                  "items": {"$ref": "rdm-definitions-v1.0.0.json#/language"}
+                  "items": {"$ref": "rdm-definitions-v1.0.0.json#/language"},
+                  "minItems": 1
                 },
                 "identifiers": {
                   "description": "Alternate identifiers for the record.",
@@ -186,26 +187,7 @@
                 },
                 "rights": {
                   "description": "Any license or copyright information for this resource.",
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "additionalProperties": false,
-                    "properties": {
-                      "id": {"$ref": "rdm-definitions-v1.0.0.json#/identifier"},
-                      "title": {
-                        "description": "The license name or license itself. Free text.",
-                        "type": "string"
-                      },
-                      "description": {
-                        "description": "The license description Free text.",
-                        "type": "string"
-                      },
-                      "link": {
-                        "type": "string",
-                        "format": "uri"
-                      }
-                    }
-                  }
+                  "$ref": "taxonomy-v2.0.0.json#/definitions/Term"
                 },
                 "abstract": {
                   "description": "Abstract description for record (may contain HTML).",

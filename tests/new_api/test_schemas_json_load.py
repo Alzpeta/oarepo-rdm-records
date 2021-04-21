@@ -19,7 +19,6 @@ from oarepo_rdm_records.marshmallow.person import (
     CreatorSchema,
 )
 from oarepo_rdm_records.marshmallow.reference import ReferenceSchema
-from oarepo_rdm_records.marshmallow.rights import RightsSchema
 
 
 def test_affiliations():
@@ -185,7 +184,7 @@ def test_creator():
         data = CreatorSchema().load(invalid_identifier_for_org)
 
 
-def test_contributor():
+def test_contributor(app, db):
     """Test contributor schema."""
     valid_full = {
         "person_or_org": {
@@ -205,22 +204,26 @@ def test_contributor():
                 "identifier": "03yrm5c26"
             }]
         }],
-        "role": "RightsHolder"
+        "role": {"links": {"self": "http://localhost/2.0/taxonomies/contributor-type/project-manager"}}
     }
 
-    data = ContributorSchema().load(valid_full)
-    assert data == valid_full
+    resolved = ContributorSchema().load(valid_full)
+    resolved.pop('role')
+    valid_full.pop('role')
+    assert resolved == valid_full
 
     valid_minimal = {"person_or_org": {
         "given_name": "Julius",
         "family_name": "Caesar",
         "name": "Caesar, Julius",
         "type": "personal"},
-        "role": "RightsHolder"
+        "role": {"links": {"self": "http://localhost/2.0/taxonomies/contributor-type/project-manager"}}
     }
 
-    data = ContributorSchema().load(valid_minimal)
-    assert data == valid_minimal
+    resolved = ContributorSchema().load(valid_minimal)
+    resolved.pop('role')
+    valid_minimal.pop('role')
+    assert resolved == valid_minimal
 
     invalid_no_name = {"person_or_org": {
         "type": "personal",
@@ -229,7 +232,7 @@ def test_contributor():
         "identifiers": {
             "Orcid": "0000-0002-1825-0097",
         }},
-        "role": "RightsHolder"
+        "role": {"links": {"self": "http://localhost/2.0/taxonomies/contributor-type/project-manager"}}
     }
     with pytest.raises(ValidationError):
         data = ContributorSchema().load(invalid_no_name)
@@ -241,7 +244,7 @@ def test_contributor():
         "identifiers": {
             "Orcid": "0000-0002-1825-0097",
         },
-        "role": "RightsHolder"
+        "role": {"links": {"self": "http://localhost/2.0/taxonomies/contributor-type/project-manager"}}
     }}
     with pytest.raises(ValidationError):
         data = ContributorSchema().load(invalid_no_name_type)
@@ -254,51 +257,10 @@ def test_contributor():
         "identifiers": {
             "Orcid": "0000-0002-1825-0097",
         },
-        "role": "RightsHolder"
+        "role": {"links": {"self": "http://localhost/2.0/taxonomies/contributor-type/project-manager"}}
     }}
     with pytest.raises(ValidationError):
         data = ContributorSchema().load(invalid_name_type)
-
-    invalid_no_role = {"person_or_org": {
-        "name": "Julio Cesar",
-        "type": "personal",
-        "given_name": "Julio",
-        "family_name": "Cesar",
-        "identifiers": [{
-            "scheme": "Orcid",
-            "identifier": "0000-0002-1825-0097",
-        }]
-    }}
-    with pytest.raises(ValidationError):
-        data = ContributorSchema().load(invalid_no_role)
-
-
-def test_license():
-    """Test license scehma."""
-    valid_full = {
-        "description": "Copyright Maximo Decimo Meridio 2020. Long statement",
-        "link": "https://opensource.org/licenses/BSD-3-Clause",
-        "identifier": "BSD-3",
-        "scheme": "BSD-3"
-    }
-
-    data = RightsSchema().load(valid_full)
-    assert data == valid_full
-
-    valid_minimal = {
-        "description": "Copyright Maximo Decimo Meridio 2020. Long statement"
-    }
-
-    data = RightsSchema().load(valid_minimal)
-    assert data == valid_minimal
-
-    invalid_no_license = {
-        "uri": "https://opensource.org/licenses/BSD-3-Clause",
-        "identifier": "BSD-3",
-        "scheme": "BSD-3"
-    }
-    with pytest.raises(ValidationError):
-        data = RightsSchema().load(invalid_no_license)
 
 
 def test_date():

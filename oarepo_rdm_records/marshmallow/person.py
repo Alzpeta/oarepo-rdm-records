@@ -20,6 +20,9 @@ from marshmallow import (
 )
 from marshmallow_utils.fields import IdentifierSet, SanitizedUnicode
 from marshmallow_utils.schemas import IdentifierSchema
+from oarepo_taxonomies.marshmallow import TaxonomyField
+
+from oarepo_rdm_records.marshmallow.mixins import TitledMixin
 
 
 class AffiliationSchema(Schema):
@@ -103,20 +106,20 @@ class ContributorSchema(Schema):
     """Contributor schema."""
 
     person_or_org = fields.Nested(PersonOrOrganizationSchema)
-    role = SanitizedUnicode(required=True)
+    role = TaxonomyField(mixins=[TitledMixin])
     affiliations = fields.List(fields.Nested(AffiliationSchema))
 
     @validates_schema
     def validate_role(self, data, **kwargs):
         """Validate role."""
-        # validate_entry('contributors.role', data)
+        # TODO: taxonomy validation?
 
 
 class CreatorSchema(Schema):
     """Creator schema."""
 
     person_or_org = fields.Nested(PersonOrOrganizationSchema, required=True)
-    role = SanitizedUnicode()
+    role = TaxonomyField(mixins=[TitledMixin])
     affiliations = fields.List(fields.Nested(AffiliationSchema))
 
     @validates_schema
@@ -124,4 +127,3 @@ class CreatorSchema(Schema):
         """Validate role."""
         # TODO: taxonomy validation?
         # if 'role' in data:
-        #     validate_entry('creators.role', data)

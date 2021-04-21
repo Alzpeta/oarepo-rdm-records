@@ -98,7 +98,12 @@
             }
           },
           "role" : {
-            "type" : "keyword"
+            "type": "taxonomy-term",
+            "properties": {
+              "title": {
+                "type": "multilingual"
+              }
+            }
           }
         }
       },
@@ -148,7 +153,12 @@
             }
           },
           "role" : {
-            "type" : "keyword"
+            "type" : "taxonomy-term",
+            "properties": {
+              "title": {
+                "type": "multilingual"
+              }
+            }
           }
         }
       },
@@ -182,33 +192,24 @@
         }
       },
       "languages" : {
-        "type": "object",
+        "type": "taxonomy-term",
         "properties": {
-          "@v": {
-            "type": "keyword"
-          },
-          "id": {
-            "type": "keyword"
-          },
           "title": {
-            "type": "object",
-            "dynamic": true
+            "type": "multilingual"
           }
         }
       },
       "rights" : {
-        "properties" : {
-          "id" : {
-            "type" : "keyword"
+        "type": "taxonomy-term",
+        "properties": {
+          "title": {
+            "type": "multilingual"
           },
-          "title" : {
-            "type" : "text"
+          "icon": {
+            "type": "keyword"
           },
-          "description" : {
-            "type" : "text"
-          },
-          "uri" : {
-            "type" : "keyword"
+          "related_URI": {
+            "type": "keyword"
           }
         }
       },
@@ -237,15 +238,13 @@
             ]
           },
           "relation_type" : {
-            "type" : "keyword"
+            "type" : "taxonomy-term"
           },
           "resource_type" : {
-            "properties" : {
-              "subtype" : {
-                "type" : "keyword"
-              },
-              "type" : {
-                "type" : "keyword"
+            "type": "taxonomy-term",
+            "properties": {
+              "title": {
+                "type": "multilingual"
               }
             }
           },
@@ -255,12 +254,10 @@
         }
       },
       "resource_type" : {
-        "properties" : {
-          "subtype" : {
-            "type" : "keyword"
-          },
-          "type" : {
-            "type" : "keyword"
+        "type": "taxonomy-term",
+        "properties": {
+          "title": {
+            "type": "multilingual"
           }
         }
       },

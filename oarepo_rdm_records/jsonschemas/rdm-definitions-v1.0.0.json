@@ -12,25 +12,22 @@
     "type": "string"
   },
   "contributorType": {
-    "type": "string"
+    "$ref": "taxonomy-v2.0.0.json#/definitions/Term"
   },
   "dateType": {
     "description": "Type of the date.",
     "type": "string"
   },
   "relationType": {
-    "type": "string"
+    "description": "Type of relation to described object.",
+    "$ref": "taxonomy-v2.0.0.json#/definitions/Term"
   },
   "descriptionType": {
     "type": "string"
   },
   "language": {
-    "type": "object",
-    "properties": {
-      "id": {
-        "type": "string"
-      }
-    }
+    "description": "ISO 639-2 B language code, i.e. code for a language in English.",
+    "$ref": "taxonomy-v2.0.0.json#/definitions/Term"
   },
   "longitude": {
     "type": "number",
@@ -135,8 +132,8 @@
     "description": "A resource type.",
     "properties": {
       "type": {
-        "description": "The general resource type identifier.",
-        "type": "string"
+        "description": "The general resource type.",
+        "$ref": "taxonomy-v2.0.0.json#/definitions/Term"
       },
       "subtype": {
         "description": "The specific resource type identifier.",
