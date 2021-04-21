@@ -11,13 +11,14 @@ from functools import partial
 
 from flask_babelex import lazy_gettext as _
 from marshmallow import (
+    Schema,
     ValidationError,
     fields,
     post_load,
     validate,
-    validates_schema, Schema,
+    validates_schema,
 )
-from marshmallow_utils.fields import SanitizedUnicode, IdentifierSet
+from marshmallow_utils.fields import IdentifierSet, SanitizedUnicode
 from marshmallow_utils.schemas import IdentifierSchema
 
 
@@ -81,6 +82,7 @@ class PersonOrOrganizationSchema(Schema):
     @post_load
     def update_names(self, data, **kwargs):
         """Update names for organization / person.
+
         Fill name from given_name and family_name if person.
         Remove given_name and family_name if organization.
         """

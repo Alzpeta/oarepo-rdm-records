@@ -10,7 +10,7 @@
 
 import arrow
 from marshmallow import Schema, ValidationError, fields, validates, validates_schema
-from marshmallow_utils.fields import ISODateString, SanitizedUnicode, NestedAttribute
+from marshmallow_utils.fields import ISODateString, NestedAttribute, SanitizedUnicode
 
 
 class Agent(Schema):

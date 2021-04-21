@@ -9,9 +9,7 @@
 """RDM record schemas."""
 
 from flask_babelex import lazy_gettext as _
-from marshmallow import (
-    validate,
-)
+from marshmallow import validate
 from marshmallow_utils.fields import SanitizedUnicode
 from marshmallow_utils.schemas import IdentifierSchema
 
@@ -59,7 +57,7 @@ class RelatedIdentifierSchema(IdentifierSchema):
 
     SCHEMES = [
         "ark",
-        "arxiv",
+        # "arxiv",
         "bibcode",
         "doi",
         "ean13",
@@ -80,7 +78,7 @@ class RelatedIdentifierSchema(IdentifierSchema):
     ]
 
     def __init__(self, **kwargs):
-        """Constructor."""
+        """Related identifier schema constructor."""
         super().__init__(allowed_schemes=self.SCHEMES, **kwargs)
 
     relation_type = SanitizedUnicode(required=True, validate=validate.OneOf(

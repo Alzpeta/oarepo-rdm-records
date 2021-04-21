@@ -7,12 +7,12 @@
 # it under the terms of the MIT License; see LICENSE file for more details.
 
 """RDM record schemas."""
-from invenio_records_rest.schemas import StrictKeysMixin
-from marshmallow import fields, Schema, validates_schema, ValidationError
+from marshmallow import Schema, ValidationError, fields, validates_schema
 
 
 class ResourceType(fields.Field):
     """Represents a Resource type as a field.
+
     This is needed to get a nice error message directly under the
     'resource_type' key. Otherwise the error message is under the "_schema"
     key.
@@ -34,10 +34,10 @@ class ResourceType(fields.Field):
             return ResourceType.ResourceTypeSchema().load(value)
         except ValidationError as error:
             error_content = (
-                []
-                + error.messages.get("type", [])
-                + error.messages.get("subtype", [])
-                + error.messages.get("_schema", [])
+                    []
+                    + error.messages.get("type", [])
+                    + error.messages.get("subtype", [])
+                    + error.messages.get("_schema", [])
             )
 
             raise ValidationError(error_content)

@@ -14,91 +14,54 @@ def test_dumping_empty_record():
     empty_record = dump_empty(DataSetMetadataSchemaV2())
 
     assert empty_record == {
-        '_access': {'access_condition': {'condition': None,
-                                         'default_link_validity': None},
-                    'access_right': None,
-                    'embargo_date': None,
-                    'files': None,
-                    'metadata': None,
-                    'owned_by': [None]},
         '_bucket': None,
-        '_default_preview': None,
-        '_created_by': None,
-        '_schema': None,
         '_files': {},
-        'keywords': [None],
-        'language': {'code': None},
-        '_owners': [None],
-        'abstract': {'description': None, 'type': None},
-        'additional_descriptions': [{'description': None, 'type': None}],
+        'access': {'embargo': {'active': None, 'reason': None, 'until': None},
+                   'files': None,
+                   'owned_by': [{'user': None}],
+                   'record': None},
+        '_schema': None,
+        'abstract': None,
+        'additional_descriptions': [None],
         'additional_titles': [None],
-        'contributors': [
-            {
-                'affiliations': [
-                    {
-                        'name': None,
-                        'identifiers': None,
-                    }
-                ],
-                'family_name': None,
-                'given_name': None,
-                'identifiers': None,
-                'name': None,
-                'role': None,
-                'type': None,
-            }
-        ],
-        'creators': [
-            {
-                'affiliations': [
-                    {
-                        'name': None,
-                        'identifiers': None,
-                    }
-                ],
-                'family_name': None,
-                'given_name': None,
-                'identifiers': None,
-                'name': None,
-                'role': None,
-                'type': None,
-            }
-        ],
-        'dates': [
-            {
-                'type': None,
-                'date': None,
-                'description': None,
-            }
-        ],
+        'contributors': [{'affiliations': [{'identifiers': [{'identifier': None,
+                                                             'scheme': None}],
+                                            'name': None}],
+                          'person_or_org': {'family_name': None,
+                                            'given_name': None,
+                                            'identifiers': [None],
+                                            'name': None,
+                                            'type': None},
+                          'role': None}],
+        'creators': [{'affiliations': [{'identifiers': [{'identifier': None,
+                                                         'scheme': None}],
+                                        'name': None}],
+                      'person_or_org': {'family_name': None,
+                                        'given_name': None,
+                                        'identifiers': [None],
+                                        'name': None,
+                                        'type': None},
+                      'role': None}],
+        'dates': [{'date': None, 'description': None, 'type': None}],
         'id': None,
-        'version': None,
+        'identifiers': [None],
+        'languages': [{'description': None, 'id': None, 'title': None}],
+        'pids': None,
         'publication_date': None,
-        'references': [
-            {
-                'scheme': None,
-                'reference': None,
-                'identifier': None
-            }
-        ],
-        'related_identifiers': [
-            {
-                'resource_type': {
-                    'subtype': None,
-                    'type': None
-                },
-                'scheme': None,
-                'relation_type': None,
-                'identifier': None
-            }
-        ],
-        'resource_type': {
-            'subtype': None,
-            'type': None
-        },
-        'rights': [{'identifier': None, 'rights': None, 'scheme': None, 'uri': None}],
-        'titles': [None],
-        # TODO: Investigate the impact of these 2 fields on
-        #       frontend to backend to frontend flow
-        'identifiers': [{'identifier': None, 'scheme': None}],
+        'publisher': None,
+        'references': [{'identifier': None, 'reference': None, 'scheme': None}],
+        'related_identifiers': [{'identifier': None,
+                                 'relation_type': None,
+                                 'resource_type': None,
+                                 'scheme': None}],
+        'resource_type': None,
+        'rights': [{'description': None,
+                    'id': None,
+                    'identifier': None,
+                    'link': None,
+                    'scheme': None,
+                    'title': None}],
+        'subjects': [{'identifier': None, 'scheme': None, 'subject': None}],
+        'title': None,
+        'version': None
     }

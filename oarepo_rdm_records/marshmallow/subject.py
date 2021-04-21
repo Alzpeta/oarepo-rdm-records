@@ -15,7 +15,7 @@ class SubjectSchema(IdentifierSchema):
     """Subject schema."""
 
     def __init__(self, **kwargs):
-        """Constructor."""
+        """SubjectSchema."""
         super().__init__(
             fail_on_unknown=False, identifier_required=False, **kwargs)
 

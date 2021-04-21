@@ -11,11 +11,65 @@
         },
         {
           "properties": {
-            "pid": {
-              "$ref": "rdm-definitions-v1.0.0.json#/internal-pid"
-            },
-            "pids": {
-              "type": "array",
+            "metadata": {
+              "type": "object",
+              "description": "DataSet record metadata.",
+              "additionalProperties": false,
+              "properties": {
+                "access": {
+                  "type": "object",
+                  "description": "Record access control and ownership.",
+                  "additionalProperties": false,
+                  "properties": {
+                    "owned_by": {
+                      "description": "List of owners of the record.",
+                      "type": "array",
+                      "uniqueItems": true,
+                      "items": {"$ref": "rdm-definitions-v1.0.0.json#/agent"}
+                    },
+
+                    "record": {
+                      "description": "Record visibility (public or restricted)",
+                      "type": "string",
+                      "enum": ["public", "restricted"]
+                    },
+
+                    "files": {
+                      "description": "Files visibility (public or restricted)",
+                      "type": "string",
+                      "enum": ["public", "restricted"]
+                    },
+
+                    "embargo": {
+                      "description": "Description of the embargo on the record.",
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "active": {
+                          "description": "Whether or not the embargo is (still) active.",
+                          "type": ["boolean", "null"]
+                        },
+                        "until": {
+                          "description": "Embargo date of record (ISO8601 formatted date time in UTC). At this time both metadata and files will be made public.",
+                          "type": ["string", "null"],
+                          "format": "date"
+                        },
+                        "reason": {
+                          "description": "The reason why the record is under embargo.",
+                          "type": ["string", "null"]
+                        }
+                      }
+                    }
+                  }
+                },
+                "notes": {
+                  "type": "array",
+                  "items":{
+                      "type": "string"
+                  }
+                },
+                "pids": {
+              "type": "object",
               "description": "External persistent identifiers for a record including e.g. OAI-PMH identifier, minted DOIs and more. PIDs are registered in the PIDStore.",
               "items": {
                 "type": "object",
@@ -23,11 +77,6 @@
               },
               "uniqueItems": true
             },
-            "metadata": {
-              "type": "object",
-              "description": "DataSet record metadata.",
-              "additionalProperties": false,
-              "properties": {
                 "resource_type": {"$ref": "rdm-definitions-v1.0.0.json#/resource_type"},
                 "creators": {
                   "description": "Creators of the resource.",
@@ -220,58 +269,6 @@
                 "on_behalf_of": {"$ref": "rdm-definitions-v1.0.0.json#/agent"}
               }
             },
-            "access": {
-              "type": "object",
-              "description": "Record access control and ownership.",
-              "additionalProperties": false,
-              "properties": {
-                "owned_by": {
-                  "description": "List of owners of the record.",
-                  "type": "array",
-                  "uniqueItems": true,
-                  "items": {"$ref": "rdm-definitions-v1.0.0.json#/agent"}
-                },
-
-                "record": {
-                  "description": "Record visibility (public or restricted)",
-                  "type": "string",
-                  "enum": ["public", "restricted"]
-                },
-
-                "files": {
-                  "description": "Files visibility (public or restricted)",
-                  "type": "string",
-                  "enum": ["public", "restricted"]
-                },
-
-                "embargo": {
-                  "description": "Description of the embargo on the record.",
-                  "type": "object",
-                  "additionalProperties": false,
-                  "properties": {
-                    "active": {
-                      "description": "Whether or not the embargo is (still) active.",
-                      "type": ["boolean", "null"]
-                    },
-                    "until": {
-                      "description": "Embargo date of record (ISO8601 formatted date time in UTC). At this time both metadata and files will be made public.",
-                      "type": ["string", "null"],
-                      "format": "date"
-                    },
-                    "reason": {
-                      "description": "The reason why the record is under embargo.",
-                      "type": ["string", "null"]
-                    }
-                  }
-                }
-              }
-            },
-            "notes": {
-              "type": "array",
-              "items":{
-                  "type": "string"
-              }
-            }
           }
         }
       ]

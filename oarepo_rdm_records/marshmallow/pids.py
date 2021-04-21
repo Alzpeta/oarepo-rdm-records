@@ -7,7 +7,7 @@
 # it under the terms of the MIT License; see LICENSE file for more details.
 
 """RDM record schemas."""
-from marshmallow import fields, Schema
+from marshmallow import Schema, fields
 
 
 #

@@ -18,7 +18,7 @@ class RightsSchema(IdentifierSchema):
     """License rights schema."""
 
     def __init__(self, **kwargs):
-        """Constructor."""
+        """Rights schema constructor."""
         super().__init__(
             fail_on_unknown=False, identifier_required=False, **kwargs)
 

@@ -23,7 +23,7 @@ class ReferenceSchema(IdentifierSchema):
     ]
 
     def __init__(self, **kwargs):
-        """Constructor."""
+        """Refer schema constructor."""
         super().__init__(allowed_schemes=self.SCHEMES,
                          identifier_required=False, **kwargs)
 

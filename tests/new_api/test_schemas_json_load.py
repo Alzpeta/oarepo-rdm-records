@@ -11,23 +11,21 @@
 import pytest
 from marshmallow import ValidationError
 
-from oarepo_rdm_records.marshmallow import (
-    ContributorSchema,
-    DateSchema,
-    ReferenceSchema,
-    RelatedIdentifierSchema,
-    RightsSchema,
-)
-from oarepo_rdm_records.marshmallow.person import AffiliationSchema, CreatorSchema
+from oarepo_rdm_records.marshmallow.dates import DateSchema
+from oarepo_rdm_records.marshmallow.identifier import RelatedIdentifierSchema
+from oarepo_rdm_records.marshmallow.person import AffiliationSchema, CreatorSchema, ContributorSchema
+from oarepo_rdm_records.marshmallow.reference import ReferenceSchema
+from oarepo_rdm_records.marshmallow.rights import RightsSchema
 
 
 def test_affiliations():
     """Test affiliations schema."""
     valid_full = {
         "name": "Entity One",
-        "identifiers": {
-            "ror": "03yrm5c26"
-        }
+        "identifiers": [{
+            "scheme": "ror",
+            "identifier": "03yrm5c26"
+        }]
     }
     data = AffiliationSchema().load(valid_full)
     assert data == valid_full
@@ -62,123 +60,123 @@ def test_affiliations():
 def test_creator():
     """Test creator schema."""
     # If present, bare minimum
-    valid_minimal = {
+    valid_minimal = {"person_or_org": {
         "given_name": "Julius",
         "family_name": "Caesar",
         "name": "Caesar, Julius",
         "type": "personal"
-    }
+    }}
     data = CreatorSchema().load(valid_minimal)
     assert data == valid_minimal
 
     # Full person
     valid_full_person = {
-        "name": "Caesar, Julius",
-        "type": "personal",
-        "given_name": "Julius",
-        "family_name": "Caesar",
-        "identifiers": {
-            "orcid": '0000-0002-1825-0097',
+        "person_or_org": {
+            "name": "Caesar, Julius",
+            "type": "personal",
+            "given_name": "Julius",
+            "family_name": "Caesar",
+            "identifiers": [{
+                "scheme": "orcid",
+                "identifier": '0000-0002-1825-0097',
+            }],
         },
         "affiliations": [{
             "name": "Entity One",
-            "identifiers": {
-                "ror": "03yrm5c26"
-            }
+            "identifiers": [{
+                "scheme": "ror",
+                "identifier": "03yrm5c26"
+            }]
         }]
     }
     data = CreatorSchema().load(valid_full_person)
     assert data == valid_full_person
 
     # Full organization
-    valid_full_org = {
+    valid_full_org = {"person_or_org": {
         "name": "California Digital Library",
         "type": "organizational",
-        "identifiers": {
-            "ror": "03yrm5c26",
-        }
-    }
+        "identifiers": [{
+            "scheme": "ror",
+            "identifier": "03yrm5c26",
+        }]
+    }}
     data = CreatorSchema().load(valid_full_org)
     assert data == valid_full_org
 
     invalid_no_name = {
-        "type": "Personal",
-        "given_name": "Julio",
-        "family_name": "Cesar",
-        "identifiers": {
-            "orcid": "0000-0002-1825-0097",
-        },
-        "affiliations": [{
-            "name": "Entity One",
+        "person_or_org": {
+            "type": "Personal",
+            "given_name": "Julio",
+            "family_name": "Cesar",
             "identifiers": {
-                "ror": "03yrm5c26"
-            }
-        }]
+                "orcid": "0000-0002-1825-0097",
+            },
+            "affiliations": [{
+                "name": "Entity One",
+                "identifiers": {
+                    "ror": "03yrm5c26"
+                }
+            }]
+        }
     }
     with pytest.raises(ValidationError):
         data = CreatorSchema().load(invalid_no_name)
 
-    invalid_no_type = {
+    invalid_no_type = {"person_or_org": {
         "name": "Julio Cesar",
-    }
+    }}
     with pytest.raises(ValidationError):
         data = CreatorSchema().load(invalid_no_type)
 
-    invalid_type = {
+    invalid_type = {"person_or_org": {
         "name": "Julio Cesar",
         "type": "Invalid",
-    }
+    }}
     with pytest.raises(ValidationError):
         data = CreatorSchema().load(invalid_type)
 
     invalid_scheme = {
-        "name": "Julio Cesar",
-        "type": "personal",
-        "identifiers": {
-            "unapproved scheme": "0000-0002-1825-0097",
+        "person_or_org": {
+            "name": "Julio Cesar",
+            "type": "personal",
+            "identifiers": [{
+                "scheme": "unapproved scheme",
+                "identifier": "0000-0002-1825-0097",
+            }]
         }
     }
     with pytest.raises(ValidationError):
         data = CreatorSchema().load(invalid_type)
 
-    invalid_orcid_identifier = {
+    invalid_orcid_identifier = {"person_or_org": {
         "name": "Julio Cesar",
         "type": "personal",
         "identifiers": {
             # NOTE: This *is* an invalid ORCiD
-            "Orcid": "9999-9999-9999-9999",
+            "scheme": "Orcid", "identifier": "9999-9999-9999-9999",
         }
-    }
+    }}
     with pytest.raises(ValidationError):
         data = CreatorSchema().load(invalid_orcid_identifier)
 
-    invalid_ror_identifier = {
-        "name": "Julio Cesar Empire",
-        "type": "organizational",
-        "identifiers": {
-            "ror": "9999-9999-9999-9999",
-        }
-    }
-    with pytest.raises(ValidationError):
-        data = CreatorSchema().load(invalid_ror_identifier)
-
-    invalid_identifier_for_person = {
+    invalid_identifier_for_person = {"person_or_org": {
         "name": "Julio Cesar",
         "type": "personal",
-        "identifiers": {
-            "ror": "03yrm5c26"
-        }
-    }
+        "identifiers": [{
+            "scheme": "ror", "identifier": "03yrm5c26"
+        }]
+    }}
     with pytest.raises(ValidationError):
         data = CreatorSchema().load(invalid_identifier_for_person)
 
-    invalid_identifier_for_org = {
+    invalid_identifier_for_org = {"person_or_org": {
         "name": "Julio Cesar Empire",
         "type": "organizational",
         "identifiers": {
             "Orcid": "0000-0002-1825-0097",
         }
-    }
+    }}
     with pytest.raises(ValidationError):
         data = CreatorSchema().load(invalid_identifier_for_org)
 
@@ -186,18 +184,22 @@ def test_creator():
 def test_contributor():
     """Test contributor schema."""
     valid_full = {
-        "name": "Caesar, Julius",
-        "type": "personal",
-        "given_name": "Julius",
-        "family_name": "Caesar",
-        "identifiers": {
-            "orcid": "0000-0002-1825-0097",
+        "person_or_org": {
+            "name": "Caesar, Julius",
+            "type": "personal",
+            "given_name": "Julius",
+            "family_name": "Caesar",
+            "identifiers": [{
+                "scheme": "orcid",
+                "identifier": "0000-0002-1825-0097",
+            }]
         },
         "affiliations": [{
             "name": "Entity One",
-            "identifiers": {
-                "ror": "03yrm5c26"
-            }
+            "identifiers": [{
+                "scheme": "ror",
+                "identifier": "03yrm5c26"
+            }]
         }],
         "role": "RightsHolder"
     }
@@ -205,31 +207,30 @@ def test_contributor():
     data = ContributorSchema().load(valid_full)
     assert data == valid_full
 
-    valid_minimal = {
+    valid_minimal = {"person_or_org": {
         "given_name": "Julius",
         "family_name": "Caesar",
         "name": "Caesar, Julius",
-        "type": "personal",
+        "type": "personal"},
         "role": "RightsHolder"
     }
 
     data = ContributorSchema().load(valid_minimal)
     assert data == valid_minimal
 
-    invalid_no_name = {
+    invalid_no_name = {"person_or_org": {
         "type": "personal",
         "given_name": "Julius",
         "family_name": "Caesar",
         "identifiers": {
             "Orcid": "0000-0002-1825-0097",
-        },
+        }},
         "role": "RightsHolder"
     }
     with pytest.raises(ValidationError):
         data = ContributorSchema().load(invalid_no_name)
 
-    invalid_no_name_type = {
-
+    invalid_no_name_type = {"person_or_org": {
         "name": "Caesar, Julius",
         "given_name": "Julius",
         "family_name": "Caesar",
@@ -237,11 +238,11 @@ def test_contributor():
             "Orcid": "0000-0002-1825-0097",
         },
         "role": "RightsHolder"
-    }
+    }}
     with pytest.raises(ValidationError):
         data = ContributorSchema().load(invalid_no_name_type)
 
-    invalid_name_type = {
+    invalid_name_type = {"person_or_org": {
         "name": "Julio Cesar",
         "type": "Invalid",
         "given_name": "Julio",
@@ -250,19 +251,20 @@ def test_contributor():
             "Orcid": "0000-0002-1825-0097",
         },
         "role": "RightsHolder"
-    }
+    }}
     with pytest.raises(ValidationError):
         data = ContributorSchema().load(invalid_name_type)
 
-    invalid_no_role = {
+    invalid_no_role = {"person_or_org": {
         "name": "Julio Cesar",
         "type": "personal",
         "given_name": "Julio",
         "family_name": "Cesar",
-        "identifiers": {
-            "Orcid": "0000-0002-1825-0097",
-        },
-    }
+        "identifiers": [{
+            "scheme": "Orcid",
+            "identifier": "0000-0002-1825-0097",
+        }]
+    }}
     with pytest.raises(ValidationError):
         data = ContributorSchema().load(invalid_no_role)
 
@@ -270,8 +272,8 @@ def test_contributor():
 def test_license():
     """Test license scehma."""
     valid_full = {
-        "rights": "Copyright Maximo Decimo Meridio 2020. Long statement",
-        "uri": "https://opensource.org/licenses/BSD-3-Clause",
+        "description": "Copyright Maximo Decimo Meridio 2020. Long statement",
+        "link": "https://opensource.org/licenses/BSD-3-Clause",
         "identifier": "BSD-3",
         "scheme": "BSD-3"
     }
@@ -280,7 +282,7 @@ def test_license():
     assert data == valid_full
 
     valid_minimal = {
-        "rights": "Copyright Maximo Decimo Meridio 2020. Long statement"
+        "description": "Copyright Maximo Decimo Meridio 2020. Long statement"
     }
 
     data = RightsSchema().load(valid_minimal)
@@ -373,29 +375,6 @@ def test_related_identifiers():
     with pytest.raises(ValidationError):
         data = RelatedIdentifierSchema().load(invalid_no_identifier)
 
-    invalid_no_scheme = {
-        "identifier": "10.5281/zenodo.9999988",
-        "relation_type": "requires",
-        "resource_type": {
-            "type": "image",
-            "subtype": "image-photo"
-        }
-    }
-    with pytest.raises(ValidationError):
-        data = RelatedIdentifierSchema().load(invalid_no_scheme)
-
-    invalid_scheme = {
-        "identifier": "10.5281/zenodo.9999988",
-        "scheme": "INVALID",
-        "relation_type": "requires",
-        "resource_type": {
-            "type": "image",
-            "subtype": "image-photo"
-        }
-    }
-    with pytest.raises(ValidationError):
-        data = RelatedIdentifierSchema().load(invalid_scheme)
-
     invalid_no_relation_type = {
         "identifier": "10.5281/zenodo.9999988",
         "scheme": "doi",
@@ -424,8 +403,8 @@ def test_references():
     """Test references schema."""
     valid_full = {
         "reference": "Reference to something et al.",
-        "identifier": "9999.99988",
-        "scheme": "grid"
+        "identifier": "0000000405069234",
+        "scheme": "isni"
     }
 
     data = ReferenceSchema().load(valid_full)
