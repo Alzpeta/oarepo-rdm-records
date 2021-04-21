@@ -2,7 +2,7 @@
 """Setup module for flask taxonomy."""
 import os
 
-from setuptools import setup, find_packages
+from setuptools import find_packages, setup
 
 readme = open('README.md').read()
 history = open('CHANGES.md').read()
