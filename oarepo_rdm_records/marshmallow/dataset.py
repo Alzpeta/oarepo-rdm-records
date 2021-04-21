@@ -12,21 +12,24 @@ from functools import partial
 
 from flask_babelex import lazy_gettext as _
 from invenio_records_rest.schemas import StrictKeysMixin
-from marshmallow import fields, pre_load, validate, validates, post_dump, Schema
+from marshmallow import Schema, fields, post_dump, pre_load, validate, validates
 from marshmallow.schema import BaseSchema
 from marshmallow_utils.fields import (
     EDTFDateString,
     IdentifierSet,
+    Links,
+    NestedAttribute,
     SanitizedHTML,
-    SanitizedUnicode, NestedAttribute,
+    SanitizedUnicode,
+    TZDateTime,
 )
-from marshmallow_utils.fields import TZDateTime, Links
 from marshmallow_utils.permissions import FieldPermissionsMixin
 from oarepo_invenio_model.marshmallow import (
     InvenioRecordMetadataFilesMixin,
     InvenioRecordMetadataSchemaV1Mixin,
 )
 from oarepo_multilingual.marshmallow import MultilingualStringV2
+
 from oarepo_rdm_records.marshmallow.access import AccessSchema
 from oarepo_rdm_records.marshmallow.dates import DateSchema
 from oarepo_rdm_records.marshmallow.identifier import (
@@ -88,7 +91,7 @@ class DataSetMetadataSchemaV2(InvenioRecordMetadataFilesMixin,
 
     @validates("pids")
     def validate_pids(self, value):
-        """Validates the keys of the pids are supported providers."""
+        """Validate the keys of the pids are supported providers."""
         for scheme, pid_attrs in value.items():
             # The required flag applies to the identifier value
             # It won't fail for empty allowing the components to reserve one

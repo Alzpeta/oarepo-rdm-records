@@ -13,7 +13,11 @@ from marshmallow import ValidationError
 
 from oarepo_rdm_records.marshmallow.dates import DateSchema
 from oarepo_rdm_records.marshmallow.identifier import RelatedIdentifierSchema
-from oarepo_rdm_records.marshmallow.person import AffiliationSchema, CreatorSchema, ContributorSchema
+from oarepo_rdm_records.marshmallow.person import (
+    AffiliationSchema,
+    ContributorSchema,
+    CreatorSchema,
+)
 from oarepo_rdm_records.marshmallow.reference import ReferenceSchema
 from oarepo_rdm_records.marshmallow.rights import RightsSchema
 
