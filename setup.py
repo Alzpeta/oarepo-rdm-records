@@ -2,7 +2,7 @@
 """Setup module for flask taxonomy."""
 import os
 
-from setuptools import setup
+from setuptools import find_packages, setup
 
 readme = open('README.md').read()
 history = open('CHANGES.md').read()
@@ -17,7 +17,8 @@ install_requires = [
     'idutils',
     'edtf',
     'oarepo-multilingual',
-    'marshmallow-utils'
+    'marshmallow-utils>=0.4.0',
+    'oarepo-taxonomies'
 ]
 
 tests_require = [
@@ -40,6 +41,14 @@ with open(os.path.join('oarepo_rdm_records', 'version.py'), 'rt') as fp:
     exec(fp.read(), g)
     version = g['__version__']
 
+packages = find_packages(exclude=['tests', 'tests.test_module'])
+
+os.environ.get('INVENIO_INSTANCE_PATH', 'var/instance')
+
+taxonomy_data = [os.path.join('taxonomies', f) for f in os.listdir('taxonomies')]
+data_files = [('var/instance/taxonomies', taxonomy_data)]
+print(data_files)
+
 setup(
     name="oarepo_rdm_records",
     version=version,
@@ -51,7 +60,7 @@ setup(
     long_description=readme + '\n\n' + history,
     long_description_content_type='text/markdown',
     zip_safe=False,
-    packages=['oarepo_rdm_records'],
+    packages=packages,
     entry_points={
         'oarepo_mapping_includes': [
           'oarepo_rdm_records = oarepo_rdm_records.included_mappings'
@@ -60,6 +69,7 @@ setup(
             'oarepo_rdm_records = oarepo_rdm_records.jsonschemas',
         ],
     },
+    data_files=data_files,
     include_package_data=True,
     setup_requires=setup_requires,
     extras_require=extras_require,

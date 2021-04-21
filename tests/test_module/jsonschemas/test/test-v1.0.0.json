@@ -3,7 +3,7 @@
   "type": "object",
   "properties": {
     "these": {
-            "$ref": "https://localhost:5000/schemas/rdm-record-v2.0.0.json#/definitions/RDMRecord"
-      }
+      "$ref": "https://localhost:5000/schemas/dataset-v2.0.0.json#/definitions/DataSet"
+    }
   }
 }

@@ -7,24 +7,16 @@
 # it under the terms of the MIT License; see LICENSE file for more details.
 
 """RDM record schemas."""
-
 from marshmallow_utils.fields import SanitizedUnicode
 from marshmallow_utils.schemas import IdentifierSchema
 
 
-class ReferenceSchema(IdentifierSchema):
-    """Reference schema."""
-
-    SCHEMES = [
-        "isni",
-        "grid",
-        "crossreffunderid",
-        "other"
-    ]
+class SubjectSchema(IdentifierSchema):
+    """Subject schema."""
 
     def __init__(self, **kwargs):
-        """Refer schema constructor."""
-        super().__init__(allowed_schemes=self.SCHEMES,
-                         identifier_required=False, **kwargs)
+        """SubjectSchema."""
+        super().__init__(
+            fail_on_unknown=False, identifier_required=False, **kwargs)
 
-    reference = SanitizedUnicode(required=True)
+    subject = SanitizedUnicode(required=True)

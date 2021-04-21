@@ -7,16 +7,16 @@
 # it under the terms of the MIT License; see LICENSE file for more details.
 
 """RDM record schemas."""
-from invenio_records_rest.schemas import StrictKeysMixin
-from marshmallow import fields
+from marshmallow import Schema, fields
 
 
 #
 # PIDs
 #
-class PIDSchema(StrictKeysMixin):
+class PIDSchema(Schema):
     """PIDs schema."""
 
     identifier = fields.Str(required=True)
     provider = fields.Str(required=True)
+    scheme = fields.Str()
     client = fields.Str()
