@@ -87,19 +87,19 @@
                     "required": ["person_or_org"],
                     "properties": {
                         "person_or_org": {"$ref": "rdm-definitions-v1.0.0.json#/person_or_org"},
-                        "role": { "$ref": "../taxonomy-v2.0.0.json#/definitions/Term" },
+                        "role": { "$ref": "taxonomy-v2.0.0.json#/definitions/Term" },
                         "affiliations": {"$ref": "rdm-definitions-v1.0.0.json#/affiliations"}
                     }
                   }
                 },
                 "title": {
                   "description": "Primary (multilingual) title of the record.",
-                  "$ref": "/schemas/multilingual-v2.0.0.json#/definitions/multilingual"
+                  "$ref": "multilingual-v2.0.0.json#/definitions/multilingual"
                 },
                 "additional_titles": {
                   "description": "Additional record (multilingual) titles.",
                   "items": {
-                    "$ref": "/schemas/multilingual-v2.0.0.json#/definitions/multilingual"
+                    "$ref": "multilingual-v2.0.0.json#/definitions/multilingual"
                   }
                 },
                 "publisher": {
@@ -250,7 +250,7 @@
                 "created_by": {"$ref": "rdm-definitions-v1.0.0.json#/agent"},
                 "on_behalf_of": {"$ref": "rdm-definitions-v1.0.0.json#/agent"}
               }
-            },
+            }
           }
         }
       ]
