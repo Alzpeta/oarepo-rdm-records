@@ -2,7 +2,7 @@
   "definitions": {
     "DataSet": {
       "id": "#dataset",
-      "title": "OARepoRDM DataSet Record v2.0.0",
+      "title": "OARepoRDM DataSet v2.0.0",
       "type": "object",
       "additionalProperties": false,
       "allOf": [
@@ -10,6 +10,8 @@
           "$ref": "invenio-v1.0.0.json#/definitions/InvenioRecord"
         },
         {
+          "title": "Dataset record fields",
+          "type": "object",
           "properties": {
             "metadata": {
               "type": "object",
@@ -98,6 +100,7 @@
                 },
                 "additional_titles": {
                   "description": "Additional record (multilingual) titles.",
+                  "type": "array",
                   "items": {
                     "$ref": "multilingual-v2.0.0.json#/definitions/multilingual"
                   }
@@ -251,7 +254,10 @@
                 "on_behalf_of": {"$ref": "rdm-definitions-v1.0.0.json#/agent"}
               }
             }
-          }
+          },
+          "required": [
+            "metadata"
+          ]
         }
       ]
     }
