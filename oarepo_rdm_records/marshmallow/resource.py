@@ -8,6 +8,9 @@
 
 """RDM record schemas."""
 from marshmallow import Schema, ValidationError, fields, validates_schema
+from oarepo_taxonomies.marshmallow import TaxonomyField
+
+from oarepo_rdm_records.marshmallow.mixins import TitledMixin
 
 
 class ResourceType(fields.Field):
@@ -21,7 +24,7 @@ class ResourceType(fields.Field):
     class ResourceTypeSchema(Schema):
         """Resource type schema."""
 
-        type = fields.Str(required=True)
+        type = TaxonomyField(mixins=[TitledMixin])
         subtype = fields.Str()
 
         @validates_schema
