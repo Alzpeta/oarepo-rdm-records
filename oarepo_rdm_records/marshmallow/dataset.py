@@ -96,7 +96,8 @@ class DataSetMetadataSchemaV2(InvenioRecordMetadataFilesMixin,
         created = None
 
         for dat in dates:
-            created = dat.get('type', {}).get('created')
+            if dat.get('type', '') == 'created':
+                created = dat.get('date')
 
         if not created:
             dates.append({

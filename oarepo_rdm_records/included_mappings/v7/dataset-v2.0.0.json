@@ -289,18 +289,8 @@
           }
         }
       },
-      "suggest_title" : {
-        "type" : "completion",
-        "analyzer" : "simple",
-        "preserve_separators" : true,
-        "preserve_position_increments" : true,
-        "max_input_length" : 50
-      },
       "title" : {
-        "type" : "multilingual",
-        "copy_to" : [
-          "suggest_title"
-        ]
+        "type" : "multilingual"
       },
       "abstract": {
         "type" : "multilingual"
