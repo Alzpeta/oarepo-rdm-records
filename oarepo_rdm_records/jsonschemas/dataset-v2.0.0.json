@@ -89,7 +89,7 @@
               "default" : "Current authenticated user's e-mail or 'anonymous'"
             },
             "creators": {
-              "description": "Creators of the resource.",
+              "description": "Authors of the resource.",
               "type": "array",
               "items": {
                 "type": "object",
