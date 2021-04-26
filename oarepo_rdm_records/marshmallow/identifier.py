@@ -44,5 +44,5 @@ class RelatedIdentifierSchema(IdentifierSchema):
         """Related identifier schema constructor."""
         super().__init__(allowed_schemes=self.SCHEMES, **kwargs)
 
-    relation_type = TaxonomyField(mixins=[TitledMixin])
+    relation_type = TaxonomyField(mixins=[TitledMixin], required=True)
     resource_type = ResourceType()

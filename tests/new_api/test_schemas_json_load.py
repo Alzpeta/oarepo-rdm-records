@@ -311,30 +311,35 @@ def test_related_identifiers():
     valid_full = {
         "identifier": "10.5281/zenodo.9999988",
         "scheme": "doi",
-        "relation_type": "requires",
+        "relation_type": {"links": {"self": "http://localhost/2.0/taxonomies/itemRelationType/requires"}},
         "resource_type": {
-            "type": "image",
+            "type": {"links": {"self": "http://localhost/2.0/taxonomies/resourceType/datasets"}},
             "subtype": "image-photo"
         }
     }
-
     data = RelatedIdentifierSchema().load(valid_full)
+    valid_full.pop('relation_type')
+    valid_full.pop('resource_type')
+    data.pop('relation_type')
+    data.pop('resource_type')
     assert data == valid_full
 
     valid_minimal = {
         "identifier": "10.5281/zenodo.9999988",
         "scheme": "doi",
-        "relation_type": "requires"
+        "relation_type": {"links": {"self": "http://localhost/2.0/taxonomies/itemRelationType/requires"}},
     }
 
     data = RelatedIdentifierSchema().load(valid_minimal)
+    data.pop('relation_type')
+    valid_minimal.pop('relation_type')
     assert data == valid_minimal
 
     invalid_no_identifier = {
         "scheme": "doi",
-        "relation_type": "requires",
+        "relation_type": {"links": {"self": "http://localhost/2.0/taxonomies/itemRelationType/requires"}},
         "resource_type": {
-            "type": "image",
+            "type": {"links": {"self": "http://localhost/2.0/taxonomies/resourceType/datasets"}},
             "subtype": "image-photo"
         }
     }
@@ -345,24 +350,12 @@ def test_related_identifiers():
         "identifier": "10.5281/zenodo.9999988",
         "scheme": "doi",
         "resource_type": {
-            "type": "image",
+            "type": {"links": {"self": "http://localhost/2.0/taxonomies/resourceType/datasets"}},
             "subtype": "image-photo"
         }
     }
     with pytest.raises(ValidationError):
         data = RelatedIdentifierSchema().load(invalid_no_relation_type)
-
-    invalid_relation_type = {
-        "identifier": "10.5281/zenodo.9999988",
-        "scheme": "doi",
-        "relation_type": "INVALID",
-        "resource_type": {
-            "type": "image",
-            "subtype": "image-photo"
-        }
-    }
-    with pytest.raises(ValidationError):
-        data = RelatedIdentifierSchema().load(invalid_relation_type)
 
 
 def test_references():

@@ -176,15 +176,20 @@
                   "description": "List of identifiers related to this resource",
                   "uniqueItems": true,
                   "items": {
-                      "type": "object",
-                      "description": "Related identifier definition. Resource_type and relation_type are taxonomy fields: [see Taxonomies](https://oarepo.github.io/publications-api/taxonomies/)",
-                      "additionalProperties": false,
-                      "properties": {
-                        "identifier": {"$ref": "rdm-definitions-v1.0.0.json#/identifier"},
-                        "scheme": {"$ref": "rdm-definitions-v1.0.0.json#/scheme"},
-                        "relation_type": {"$ref": "rdm-definitions-v1.0.0.json#/relationType"},
-                        "resource_type": {"$ref": "rdm-definitions-v1.0.0.json#/resource_type"}
-                      }
+                    "type": "object",
+                    "description": "Related identifier definition. Resource_type and relation_type are taxonomy fields: [see Taxonomies](https://oarepo.github.io/publications-api/taxonomies/)",
+                    "additionalProperties": false,
+                    "properties": {
+                      "identifier": {"$ref": "rdm-definitions-v1.0.0.json#/identifier"},
+                      "scheme": {"$ref": "rdm-definitions-v1.0.0.json#/scheme"},
+                      "relation_type": {"$ref": "rdm-definitions-v1.0.0.json#/relationType"},
+                      "resource_type": {"$ref": "rdm-definitions-v1.0.0.json#/resource_type"}
+                    },
+                    "required": [
+                      "identifier",
+                      "scheme",
+                      "relation_type"
+                    ]
                   }
                 },
                 "version": {

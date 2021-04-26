@@ -28,10 +28,12 @@ def test_marshmallow_app(app, db):
                                             "family_name": "prijmeni",
                                             "name": "prijmeni, jmeno",
                                             "type": "personal"}}],
-            "resource_type": {"type": "schema"}}
+            "resource_type": {"type": {"links": {"self": "http://localhost/2.0/taxonomies/resourceType/datasets"}}}}
 
     resolved = MD().load(data)
+    data.pop('resource_type')
     data.pop('languages')
+    resolved.pop('resource_type')
     resolved.pop('languages')
     assert data == resolved
 
@@ -39,7 +41,7 @@ def test_marshmallow_app(app, db):
             "_created_by": 5,
             "publication_date": "2020-05-12",
             "creators": [{'name': 'jmeno', "type": "personal"}],
-            "resource_type": {"type": "schema"}}
+            "resource_type": {"type": {"links": {"self": "http://localhost/2.0/taxonomies/resourceType/datasets"}}}}
 
     with pytest.raises(ValidationError):
         MD().load(data)
@@ -55,9 +57,12 @@ def test_marshmallow():
                                             "given_name": "jmeno",
                                             'name': 'prijmeno, jmeno',
                                             "type": "personal"}}],
-            "resource_type": {"type": "schema"}}
+            "resource_type": {"type": {"links": {"self": "http://localhost/2.0/taxonomies/resourceType/datasets"}}}}
 
-    assert data == MD().load(data)
+    resolved = MD().load(data)
+    data.pop('resource_type')
+    resolved.pop('resource_type')
+    assert data == resolved
 
     data = {"title": {"cs": "jej"},
             "abstract": {"cs": "jej"},
@@ -67,16 +72,18 @@ def test_marshmallow():
                                             "family_name": "prijemno",
                                             'name': 'prijemno, jmeno',
                                             "type": "personal"}}],
-            "resource_type": {"type": "schema"}}
+            "resource_type": {"type": {"links": {"self": "http://localhost/2.0/taxonomies/resourceType/datasets"}}}}
     resolved = MD().load(data)
     data.pop('rights')
+    data.pop('resource_type')
     resolved.pop('rights')
+    resolved.pop('resource_type')
     assert data == resolved
 
     data = {"title": {"css": "jej"},
             "publication_date": "2020-05-12",
             "creators": [{'person_or_org': {'name': 'jmeno', "type": "Personal"}}],
-            "resource_type": {"type": "schema"}}
+            "resource_type": {"type": {"links": {"self": "http://localhost/2.0/taxonomies/resourceType/datasets"}}}}
 
     with pytest.raises(ValidationError):
         MD().load(data)
