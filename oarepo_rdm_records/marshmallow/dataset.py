@@ -91,6 +91,7 @@ class DataSetMetadataSchemaV2(InvenioRecordMetadataFilesMixin,
 
     @pre_load
     def set_created(self, data, **kwargs):
+        """Set created timestamp if not already set."""
         dates = data.get('dates') or []
         created = None
 
@@ -108,6 +109,7 @@ class DataSetMetadataSchemaV2(InvenioRecordMetadataFilesMixin,
 
     @pre_load
     def set_creator(self, data, **kwargs):
+        """Set creator to record metadata if not known."""
         if not data.get('creator'):
             if current_user.is_authenticated:
                 data['creator'] = current_user.email
