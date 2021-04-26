@@ -4,6 +4,9 @@
       "invenio-v1.0.0.json#/InvenioRecord"
     ],
     "properties": {
+      "keywords": {
+        "type": "keyword"
+      },
       "access" : {
         "properties": {
           "owned_by" : {

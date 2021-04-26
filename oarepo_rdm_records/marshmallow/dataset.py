@@ -12,6 +12,7 @@ from functools import partial
 from flask_babelex import lazy_gettext as _
 from invenio_records_rest.schemas import StrictKeysMixin
 from marshmallow import fields, pre_load, validate, validates
+from marshmallow.fields import List
 from marshmallow_utils.fields import (
     EDTFDateString,
     IdentifierSet,
@@ -54,18 +55,18 @@ class DataSetMetadataSchemaV2(InvenioRecordMetadataFilesMixin,
         )
     )
     title = MultilingualStringV2(required=True)
-    additional_titles = fields.List(MultilingualStringV2())
+    additional_titles = List(MultilingualStringV2())
     publisher = SanitizedUnicode()
     publication_date = EDTFDateString(required=True)
-    subjects = fields.List(fields.Nested(SubjectSchema))
-    contributors = fields.List(fields.Nested(ContributorSchema))
-    dates = fields.List(fields.Nested(DateSchema))
+    subjects = List(fields.Nested(SubjectSchema))
+    contributors = List(fields.Nested(ContributorSchema))
+    dates = List(fields.Nested(DateSchema))
     languages = TaxonomyField(mixins=[TitledMixin], many=True)
     # alternate identifiers
     identifiers = IdentifierSet(
         fields.Nested(partial(IdentifierSchema, fail_on_unknown=False))
     )
-    related_identifiers = fields.List(fields.Nested(RelatedIdentifierSchema))
+    related_identifiers = List(fields.Nested(RelatedIdentifierSchema))
     version = SanitizedUnicode()
     rights = TaxonomyField(mixins=[TitledMixin, RightsMixin], many=True)
     abstract = MultilingualStringV2(required=True)  # WARNING: May contain user-input HTML
@@ -73,6 +74,7 @@ class DataSetMetadataSchemaV2(InvenioRecordMetadataFilesMixin,
     references = fields.List(fields.Nested(ReferenceSchema))
     pids = fields.Dict(keys=fields.String(), values=fields.Nested(PIDSchema))
     access = NestedAttribute(AccessSchema)
+    keywords = List(SanitizedUnicode())
 
     @pre_load
     def sanitize_html_fields(self, data, **kwargs):

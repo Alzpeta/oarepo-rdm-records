@@ -18,6 +18,13 @@
               "description": "DataSet record metadata.",
               "additionalProperties": false,
               "properties": {
+                "keywords": {
+                  "description": "Free-form keywords, often created by author(s)",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
                 "access": {
                   "type": "object",
                   "description": "Record access control and ownership.",

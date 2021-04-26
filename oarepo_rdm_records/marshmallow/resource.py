@@ -24,7 +24,7 @@ class ResourceType(fields.Field):
     class ResourceTypeSchema(Schema):
         """Resource type schema."""
 
-        type = TaxonomyField(mixins=[TitledMixin])
+        type = TaxonomyField(mixins=[TitledMixin], required=True)
         subtype = fields.Str()
 
         @validates_schema
