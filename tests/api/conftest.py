@@ -14,6 +14,10 @@ fixtures are available.
 from __future__ import absolute_import, print_function
 
 import pytest
+from flask_login import LoginManager
+from flask_principal import Principal
+from flask_security import Security
+from invenio_access import InvenioAccess
 from invenio_app.factory import create_api
 
 #from invenio_rdm_records.vocabularies import Vocabularies
@@ -271,6 +275,9 @@ def base_app(create_app, app_config, request, default_handler):
     create_app = getattr(request.module, 'create_app', create_app)
     app_ = create_app(**app_config)
     # See documentation for default_handler
+
+
+
     if default_handler:
         app_.logger.addHandler(default_handler)
     yield app_
@@ -507,6 +514,14 @@ def app(base_app, es, database):
     See also :py:data:`base_app` for an Invenio application fixture that
     does not initialize database and Elasticsearch.
     """
+    Security(base_app)
+    InvenioAccess(base_app)
+    LoginManager(base_app)
+    Principal(base_app)
+
+    login_manager = LoginManager()
+    login_manager.init_app(base_app)
+
     yield base_app
 
 

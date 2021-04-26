@@ -42,6 +42,7 @@ def test_dumping_empty_record():
                                         'name': None,
                                         'type': None},
                       'role': None}],
+        'creator': None,
         'dates': [{'date': None, 'description': None, 'type': None}],
         'id': None,
         'identifiers': [None],

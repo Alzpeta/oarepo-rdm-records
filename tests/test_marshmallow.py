@@ -8,6 +8,7 @@ from __future__ import absolute_import, print_function
 
 import marshmallow
 import pytest
+from flask_login import LoginManager
 from marshmallow import ValidationError
 
 from oarepo_rdm_records.marshmallow.dataset import DataSetMetadataSchemaV2
@@ -20,7 +21,13 @@ class MD(DataSetMetadataSchemaV2, marshmallow.Schema):
 def test_marshmallow_app(app, db):
     """Test marshmallow with app."""
     app.config.update(SUPPORTED_LANGUAGES=["cs", "en"])
+    LoginManager(app)
+
+    login_manager = LoginManager()
+    login_manager.init_app(app)
+
     data = {"title": {"cs": "jej"},
+
             "abstract": {"cs": "joj"},
             "languages": [{"links": {"self": "http://localhost/2.0/taxonomies/languages/cze"}}],
             "publication_date": "2020-05-12",
@@ -47,8 +54,12 @@ def test_marshmallow_app(app, db):
         MD().load(data)
 
 
-def test_marshmallow():
+def test_marshmallow(app):
     """Test marshmallow."""
+    LoginManager(app)
+
+    login_manager = LoginManager()
+    login_manager.init_app(app)
 
     data = {"title": {"cs": "jej"},
             "abstract": {"cs": "jjo"},

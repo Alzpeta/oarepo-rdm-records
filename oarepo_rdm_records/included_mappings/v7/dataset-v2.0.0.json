@@ -165,6 +165,15 @@
           }
         }
       },
+      "creator": {
+        "type": "text",
+        "fields": {
+          "raw": {
+            "type": "keyword",
+            "ignore_above": 100
+          }
+        }
+      },
       "dates" : {
         "properties" : {
           "description" : {

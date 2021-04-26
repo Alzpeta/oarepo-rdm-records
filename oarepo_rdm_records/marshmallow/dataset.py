@@ -7,9 +7,11 @@
 # it under the terms of the MIT License; see LICENSE file for more details.
 
 """RDM record schemas."""
+from datetime import datetime
 from functools import partial
 
 from flask_babelex import lazy_gettext as _
+from flask_security import current_user
 from invenio_records_rest.schemas import StrictKeysMixin
 from marshmallow import fields, pre_load, validate, validates
 from marshmallow.fields import List
@@ -54,6 +56,7 @@ class DataSetMetadataSchemaV2(InvenioRecordMetadataFilesMixin,
             min=1, error=_("Missing data for required field.")
         )
     )
+    creator = SanitizedUnicode(required=True)
     title = MultilingualStringV2(required=True)
     additional_titles = List(MultilingualStringV2())
     publisher = SanitizedUnicode()
@@ -86,7 +89,33 @@ class DataSetMetadataSchemaV2(InvenioRecordMetadataFilesMixin,
 
         return data
 
-    @validates("pids")
+    @pre_load
+    def set_created(self, data, **kwargs):
+        dates = data.get('dates') or []
+        created = None
+
+        for dat in dates:
+            created = dat.get('type', {}).get('created')
+
+        if not created:
+            dates.append({
+                'date': datetime.today().strftime('%Y-%m-%d'),
+                'type': 'created'
+            })
+            data['dates'] = dates
+
+        return data
+
+    @pre_load
+    def set_creator(self, data, **kwargs):
+        if not data.get('creator'):
+            if current_user.is_authenticated:
+                data['creator'] = current_user.email
+            else:
+                data['creator'] = 'anonymous'
+        return data
+
+    @validates('pids')
     def validate_pids(self, value):
         """Validate the keys of the pids are supported providers."""
         for scheme, pid_attrs in value.items():
