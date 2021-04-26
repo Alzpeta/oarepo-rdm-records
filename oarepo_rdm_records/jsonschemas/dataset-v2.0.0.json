@@ -85,6 +85,7 @@
                   "type": "array",
                   "items": {
                     "type": "object",
+                    "description": "Resource creator metadata. Role is a taxonomy field: [contributor-type](https://oarepo.github.io/publications-api/taxonomies/#ContributorType)",
                     "additionalProperties": false,
                     "required": ["person_or_org"],
                     "properties": {
@@ -159,7 +160,7 @@
                   }
                 },
                 "languages": {
-                  "description": "The primary language of the resource. ISO 639-2 B language code.",
+                  "description": "The primary languages of the resource. Taxonomy field: [languages](https://oarepo.github.io/publications-api/taxonomies/#Languages).",
                   "type": "array",
                   "items": {"$ref": "rdm-definitions-v1.0.0.json#/language"},
                   "minItems": 1
@@ -172,9 +173,11 @@
                 },
                 "related_identifiers": {
                   "type": "array",
+                  "description": "List of identifiers related to this resource",
                   "uniqueItems": true,
                   "items": {
                       "type": "object",
+                      "description": "Related identifier definition. Resource_type and relation_type are taxonomy fields: [see Taxonomies](https://oarepo.github.io/publications-api/taxonomies/)",
                       "additionalProperties": false,
                       "properties": {
                         "identifier": {"$ref": "rdm-definitions-v1.0.0.json#/identifier"},
@@ -189,21 +192,23 @@
                   "type": "string"
                 },
                 "rights": {
-                  "description": "Any license or copyright information for this resource.",
+                  "description": "Any license or copyright information for this resource. Taxonomy field: [licenses](https://oarepo.github.io/publications-api/taxonomies/#Licenses)",
                   "$ref": "taxonomy-v2.0.0.json#/definitions/Term"
                 },
                 "abstract": {
-                  "description": "Abstract description for record (may contain HTML).",
+                  "description": "Multilingual abstract description for record (may contain HTML).",
                   "$ref": "multilingual-v2.0.0.json#/definitions/multilingual"
                 },
                 "additional_descriptions": {
                   "type": "array",
+                  "description": "Multilingual list of additional descriptions of the resource",
                   "items": {
                     "$ref": "multilingual-v2.0.0.json#/definitions/multilingual"
                   }
                 },
                 "references": {
                   "type": "array",
+                  "description": "List of references to another resources",
                   "minItems": 0,
                   "items": {
                     "type": "object",
