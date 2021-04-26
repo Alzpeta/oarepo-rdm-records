@@ -169,8 +169,7 @@
             },
             "languages": {
               "description": "The primary languages of the resource. Taxonomy field: [languages](https://oarepo.github.io/publications-api/taxonomies/#Languages).",
-              "type": "array",
-              "items": {"$ref": "rdm-definitions-v1.0.0.json#/language"},
+              "$ref": "rdm-definitions-v1.0.0.json#/language",
               "minItems": 1
             },
             "identifiers": {
