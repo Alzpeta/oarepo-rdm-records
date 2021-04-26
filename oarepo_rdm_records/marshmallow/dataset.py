@@ -111,7 +111,7 @@ class DataSetMetadataSchemaV2(InvenioRecordMetadataFilesMixin,
     def set_creator(self, data, **kwargs):
         """Set creator to record metadata if not known."""
         if not data.get('creator'):
-            if current_user.is_authenticated:
+            if current_user and current_user.is_authenticated:
                 data['creator'] = current_user.email
             else:
                 data['creator'] = 'anonymous'
