@@ -56,7 +56,7 @@ class DataSetMetadataSchemaV2(InvenioRecordMetadataFilesMixin,
             min=1, error=_("Missing data for required field.")
         )
     )
-    creator = SanitizedUnicode(required=True)
+    creator = SanitizedUnicode()
     title = MultilingualStringV2(required=True)
     additional_titles = List(MultilingualStringV2())
     publisher = SanitizedUnicode()

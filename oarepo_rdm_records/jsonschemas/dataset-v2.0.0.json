@@ -235,7 +235,12 @@
                 }
               }
             }
-          }
+          },
+          "required": [
+            "title",
+            "publication_date",
+            "abstract"
+          ]
         }
       ]
     }
