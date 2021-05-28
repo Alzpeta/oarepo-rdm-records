@@ -7,15 +7,29 @@
 # it under the terms of the MIT License; see LICENSE file for more details.
 
 """RDM record schemas."""
-
-from marshmallow_utils.schemas import IdentifierSchema
+from marshmallow import EXCLUDE, Schema, fields
+from marshmallow_utils.schemas import IdentifierSchema as IS
 from oarepo_taxonomies.marshmallow import TaxonomyField
 
 from oarepo_rdm_records.marshmallow.mixins import TitledMixin
 from oarepo_rdm_records.marshmallow.resource import ResourceType
 
 
-class RelatedIdentifierSchema(IdentifierSchema):
+class IdentifierSchema(Schema):
+    """Identifier schema."""
+
+    class Meta:
+        """Meta attributes for the schema."""
+
+        unknown = EXCLUDE
+
+    material = fields.Str()
+    scheme = fields.Str()
+    value = fields.Str()
+    status = fields.Str()
+
+
+class RelatedIdentifierSchema(IS):
     """Related identifier schema."""
 
     SCHEMES = [

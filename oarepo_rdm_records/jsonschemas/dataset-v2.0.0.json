@@ -175,7 +175,20 @@
             "identifiers": {
               "description": "Alternate identifiers for the record.",
               "type": "array",
-              "items": {"$ref": "rdm-definitions-v1.0.0.json#/identifiers_with_scheme"},
+              "items": {
+                "scheme": {
+                  "title": "Scheme of the identifier (Vocabulary)",
+                  "type": "string"
+                  },
+                "value": {
+                  "title": "Value of the identifier",
+                  "type": "string"
+                },
+                "status": {
+                  "title": "Field for recording identifier request information.",
+                  "type": "string"
+                }
+              },
               "uniqueItems": true
             },
             "related_identifiers": {
