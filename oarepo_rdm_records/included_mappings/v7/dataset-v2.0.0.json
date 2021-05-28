@@ -200,6 +200,9 @@
           },
           "scheme" : {
             "type" : "keyword"
+          },
+          "status": {
+            "type": "keyword"
           }
         }
       },
