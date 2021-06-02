@@ -54,6 +54,23 @@
       "$ref": "#/identifier"
     }
   },
+  "identifiers_with_status": {
+    "description": "Identifiers object with identifier value, scheme and status field.",
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "identifier": {
+        "$ref": "#/identifier"
+      },
+      "scheme": {
+        "$ref": "#/scheme"
+      },
+      "status": {
+        "description": "Status of an identifier (e.g. requested, registered,...)",
+        "type": "string"
+      }
+    }
+  },
   "identifiers_with_scheme": {
     "description": "Identifiers object with identifier value and scheme in separate keys.",
     "type": "object",
