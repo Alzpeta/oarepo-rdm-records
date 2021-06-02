@@ -25,7 +25,7 @@ class RelatedIdentifierSchema(IS):
 
     SCHEMES = [
         "ark",
-        # "arxiv",ß
+        # "arxiv",
         "bibcode",
         "doi",
         "ean13",

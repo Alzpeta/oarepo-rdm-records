@@ -123,3 +123,5 @@ def db(app):
     # Explicitly close DB connection
     db_.session.close()
     db_.drop_all()
+    if os.path.exists(db_path):
+        os.remove(db_path)
