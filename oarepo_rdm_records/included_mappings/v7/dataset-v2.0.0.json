@@ -8,6 +8,7 @@
         "type": "keyword"
       },
       "access" : {
+        "type": "nested",
         "properties": {
           "owned_by" : {
             "properties": {
@@ -56,8 +57,10 @@
         }
       },
       "contributors" : {
+        "type": "nested",
         "properties" : {
           "affiliations" : {
+            "type": "nested",
             "properties" : {
               "identifiers" : {
                 "properties": {
@@ -70,11 +73,12 @@
                 }
               },
               "name" : {
-                "type" : "text"
+                "type" : "keyword"
               }
             }
           },
           "person_or_org": {
+            "type": "nested",
             "properties": {
               "family_name" : {
                 "type" : "text"
@@ -93,7 +97,7 @@
                 }
               },
               "name" : {
-                "type" : "text"
+                "type" : "keyword"
               },
               "type" : {
                 "type" : "keyword"
@@ -111,8 +115,10 @@
         }
       },
       "creators" : {
+        "type": "nested",
         "properties" : {
           "affiliations" : {
+            "type": "nested",
             "properties" : {
               "identifiers" : {
                 "properties": {
@@ -125,11 +131,12 @@
                 }
               },
               "name" : {
-                "type" : "text"
+                "type" : "keyword"
               }
             }
           },
           "person_or_org": {
+            "type": "nested",
             "properties": {
               "family_name" : {
                 "type" : "text"
@@ -148,7 +155,7 @@
                 }
               },
               "name" : {
-                "type" : "text"
+                "type" : "keyword"
               },
               "type" : {
                 "type" : "keyword"
@@ -175,6 +182,7 @@
         }
       },
       "dates" : {
+        "type": "nested",
         "properties" : {
           "description" : {
             "type" : "text"
@@ -280,6 +288,7 @@
         "type": "keyword"
       },
       "subjects" : {
+        "type": "nested",
         "properties" : {
           "identifier" : {
             "type" : "keyword"
