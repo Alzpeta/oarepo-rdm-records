@@ -56,6 +56,7 @@ FORMATTER_BADGES_TITLE_MAPPING = {'doi': 'DOI'}
 
 # Invenio-RDM-Records
 # ===================
+
 def _(x):
     """Identity function for string extraction."""
     return x
