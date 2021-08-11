@@ -69,7 +69,7 @@ class DataSetMetadataSchemaV2(InvenioRecordMetadataFilesMixin,
     languages = TaxonomyField(mixins=[TitledMixin], many=True)
     # alternate identifiers
     identifiers = IdentifierSet(
-        fields.Nested(partial(IdentifierSchema, fail_on_unknown=False, allowed_schemes=RDM_RECORDS_IDENTIFIERS_SCHEMES))
+        fields.Nested(partial(IdentifierSchema, allowed_schemes=RDM_RECORDS_IDENTIFIERS_SCHEMES))
     )
     related_identifiers = List(fields.Nested(RelatedIdentifierSchema))
     version = SanitizedUnicode()
@@ -127,7 +127,7 @@ class DataSetMetadataSchemaV2(InvenioRecordMetadataFilesMixin,
             # The required flag applies to the identifier value
             # It won't fail for empty allowing the components to reserve one
             id_schema = IdentifierSchema(
-                fail_on_unknown=False, identifier_required=True, allowed_schemes=RDM_RECORDS_IDENTIFIERS_SCHEMES)
+                identifier_required=True, allowed_schemes=RDM_RECORDS_IDENTIFIERS_SCHEMES)
             id_schema.load({
                 "scheme": scheme,
                 "identifier": pid_attrs.get("identifier")

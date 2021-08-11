@@ -64,7 +64,6 @@ class PersonOrOrganizationSchema(Schema):
             # It is intendedly allowing org schemes to be sent as personal
             # and viceversa. This is a trade off learnt from running
             # Zenodo in production.
-            #allowed_schemes=["orcid", "isni", "gnd", "ror"]
             allowed_schemes = {
                             "orcid": {"label": "ORCID", "validator": idutils.is_orcid},
                             "isni": {"label": "ISNI", "validator": idutils.is_isni},

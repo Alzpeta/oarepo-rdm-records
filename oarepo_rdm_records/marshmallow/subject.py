@@ -20,6 +20,6 @@ class SubjectSchema(IdentifierSchema):
     def __init__(self, **kwargs):
         """SubjectSchema."""
         super().__init__(
-            fail_on_unknown=False, identifier_required=False, allowed_schemes=RDM_RECORDS_IDENTIFIERS_SCHEMES, **kwargs)
+             identifier_required=False, allowed_schemes=RDM_RECORDS_IDENTIFIERS_SCHEMES, **kwargs)
 
     subject = SanitizedUnicode(required=True)
