@@ -12,7 +12,6 @@ exclude run-tests.sh
 exclude tests
 include *.rst
 include *.md
-include *.db
 
 recursive-include oarepo_rdm_records *.py
 recursive-include oarepo_rdm_records *.json
