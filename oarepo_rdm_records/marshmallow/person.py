@@ -9,6 +9,7 @@
 """RDM record schemas."""
 from functools import partial
 
+import idutils
 from flask_babelex import lazy_gettext as _
 from marshmallow import (
     Schema,
@@ -22,6 +23,7 @@ from marshmallow_utils.fields import IdentifierSet, SanitizedUnicode
 from marshmallow_utils.schemas import IdentifierSchema
 from oarepo_taxonomies.marshmallow import TaxonomyField
 
+from oarepo_rdm_records.config import RDM_RECORDS_IDENTIFIERS_SCHEMES
 from oarepo_rdm_records.marshmallow.mixins import TitledMixin
 
 
@@ -30,7 +32,7 @@ class AffiliationSchema(Schema):
 
     name = SanitizedUnicode(required=True)
     identifiers = IdentifierSet(
-        fields.Nested(IdentifierSchema),
+        fields.Nested(IdentifierSchema, allowed_schemes=RDM_RECORDS_IDENTIFIERS_SCHEMES),
     )
 
 
@@ -62,7 +64,14 @@ class PersonOrOrganizationSchema(Schema):
             # It is intendedly allowing org schemes to be sent as personal
             # and viceversa. This is a trade off learnt from running
             # Zenodo in production.
-            allowed_schemes=["orcid", "isni", "gnd", "ror"]
+            #allowed_schemes=["orcid", "isni", "gnd", "ror"]
+            allowed_schemes = {
+                            "orcid": {"label": "ORCID", "validator": idutils.is_orcid},
+                            "isni": {"label": "ISNI", "validator": idutils.is_isni},
+                            "gnd": {"label": "GND", "validator": idutils.is_gnd},
+                            "ror": {"label": "ROR", "validator": idutils.is_ror}
+
+                        }
         ))
     )
 

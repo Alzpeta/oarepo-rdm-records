@@ -10,6 +10,7 @@
 from datetime import datetime
 from functools import partial
 
+from flask import current_app
 from flask_babelex import lazy_gettext as _
 from flask_security import current_user
 from invenio_records_rest.schemas import StrictKeysMixin
@@ -29,6 +30,7 @@ from oarepo_invenio_model.marshmallow import (
 from oarepo_multilingual.marshmallow import MultilingualStringV2
 from oarepo_taxonomies.marshmallow import TaxonomyField
 
+from oarepo_rdm_records.config import RDM_RECORDS_IDENTIFIERS_SCHEMES
 from oarepo_rdm_records.marshmallow.access import AccessSchema
 from oarepo_rdm_records.marshmallow.dates import DateSchema
 from oarepo_rdm_records.marshmallow.identifier import (
@@ -67,7 +69,7 @@ class DataSetMetadataSchemaV2(InvenioRecordMetadataFilesMixin,
     languages = TaxonomyField(mixins=[TitledMixin], many=True)
     # alternate identifiers
     identifiers = IdentifierSet(
-        fields.Nested(partial(IdentifierSchema, fail_on_unknown=False))
+        fields.Nested(partial(IdentifierSchema, fail_on_unknown=False, allowed_schemes=RDM_RECORDS_IDENTIFIERS_SCHEMES))
     )
     related_identifiers = List(fields.Nested(RelatedIdentifierSchema))
     version = SanitizedUnicode()
@@ -125,7 +127,7 @@ class DataSetMetadataSchemaV2(InvenioRecordMetadataFilesMixin,
             # The required flag applies to the identifier value
             # It won't fail for empty allowing the components to reserve one
             id_schema = IdentifierSchema(
-                fail_on_unknown=False, identifier_required=True)
+                fail_on_unknown=False, identifier_required=True, allowed_schemes=RDM_RECORDS_IDENTIFIERS_SCHEMES)
             id_schema.load({
                 "scheme": scheme,
                 "identifier": pid_attrs.get("identifier")

@@ -11,6 +11,7 @@ from marshmallow_utils.fields import SanitizedUnicode
 from marshmallow_utils.schemas import IdentifierSchema as IS
 from oarepo_taxonomies.marshmallow import TaxonomyField
 
+from oarepo_rdm_records.config import RDM_RECORDS_IDENTIFIERS_SCHEMES
 from oarepo_rdm_records.marshmallow.mixins import TitledMixin
 from oarepo_rdm_records.marshmallow.resource import ResourceType
 
@@ -23,31 +24,11 @@ class IdentifierSchema(IS):
 class RelatedIdentifierSchema(IS):
     """Related identifier schema."""
 
-    SCHEMES = [
-        "ark",
-        # "arxiv",
-        "bibcode",
-        "doi",
-        "ean13",
-        "eissn",
-        "handle",
-        "igsn",
-        "isbn",
-        "issn",
-        "istc",
-        "lissn",
-        "lsid",
-        "pmid",
-        "purl",
-        "upc",
-        "url",
-        "urn",
-        "w3id"
-    ]
+
 
     def __init__(self, **kwargs):
         """Related identifier schema constructor."""
-        super().__init__(allowed_schemes=self.SCHEMES, **kwargs)
+        super().__init__(allowed_schemes=RDM_RECORDS_IDENTIFIERS_SCHEMES, **kwargs)
 
     relation_type = TaxonomyField(mixins=[TitledMixin], required=True)
     resource_type = ResourceType()

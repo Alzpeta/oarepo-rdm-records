@@ -7,8 +7,11 @@
 # it under the terms of the MIT License; see LICENSE file for more details.
 
 """RDM record schemas."""
+
 from marshmallow_utils.fields import SanitizedUnicode
 from marshmallow_utils.schemas import IdentifierSchema
+
+from oarepo_rdm_records.config import RDM_RECORDS_IDENTIFIERS_SCHEMES
 
 
 class SubjectSchema(IdentifierSchema):
@@ -17,6 +20,6 @@ class SubjectSchema(IdentifierSchema):
     def __init__(self, **kwargs):
         """SubjectSchema."""
         super().__init__(
-            fail_on_unknown=False, identifier_required=False, **kwargs)
+            fail_on_unknown=False, identifier_required=False, allowed_schemes=RDM_RECORDS_IDENTIFIERS_SCHEMES, **kwargs)
 
     subject = SanitizedUnicode(required=True)
